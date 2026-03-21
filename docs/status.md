@@ -12,6 +12,7 @@
 
 ## In Progress
 - Реализация M2-M7 в коде (Playwright engine + tools + snapshots + subagents + security), требуется валидация после установки зависимостей.
+  - Терминал: серые “внутренние” логи + светлый финальный RESULT, файл логов `logs/run-*.log`.
 
 ## Next
 - M2: Playwright browser engine (visible + persistent).

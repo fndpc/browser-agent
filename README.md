@@ -62,6 +62,12 @@ browser-agent --task "Открой https://example.com и нажми More inform
 
 По умолчанию persistent профиль хранится в `.browser_profile/` (можно сменить `--profile-dir`).
 
+### Цвета и логи
+
+- Все “внутренние” сообщения (логи, tool-calls, статус) печатаются тёмно‑серым, финальный `RESULT` — более светлым.
+- Отключить ANSI-цвета: `--no-color` или env `NO_COLOR=1`.
+- По умолчанию пишется файл логов `logs/run-<timestamp>.log` (можно задать `--log-file path.log`).
+
 ## Примеры задач
 
 - `Открой https://example.com и нажми ссылку More information`

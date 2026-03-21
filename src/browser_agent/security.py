@@ -4,6 +4,8 @@ import re
 import time
 from dataclasses import dataclass
 
+from browser_agent.ui import UI
+
 
 _RISK_PATTERNS = [
     # EN
@@ -54,8 +56,5 @@ class DestructiveApproval:
         return ok
 
 
-def confirm_destructive_action(action: str) -> bool:
-    prompt = f"CONFIRM required: {action}\nType 'y' to proceed, anything else to cancel: "
-    ans = input(prompt).strip().lower()
-    return ans == "y"
-
+def confirm_destructive_action(action: str, *, ui: UI | None = None) -> bool:
+    return (ui or UI()).confirm(action)

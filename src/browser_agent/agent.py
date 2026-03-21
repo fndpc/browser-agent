@@ -11,6 +11,7 @@ from browser_agent.openai_client import OpenAIChat
 from browser_agent.security import DestructiveApproval
 from browser_agent.subagents import DOMAgent, NavigationAgent
 from browser_agent.tools import ToolContext, dispatch_tool, tool_schemas
+from browser_agent.ui import UI
 
 log = logging.getLogger("browser_agent.agent")
 
@@ -56,10 +57,11 @@ def _tool_call_to_dict(tc: Any) -> dict[str, Any]:
 
 
 class BrowserAgent:
-    def __init__(self, *, chat: OpenAIChat, engine, cfg: AgentConfig):
+    def __init__(self, *, chat: OpenAIChat, engine, cfg: AgentConfig, ui: UI):
         self._chat = chat
         self._engine = engine
         self._cfg = cfg
+        self._ui = ui
         self._memory = AgentMemory()
         self._approval = DestructiveApproval()
         self._tools = tool_schemas()
@@ -74,6 +76,7 @@ class BrowserAgent:
             engine=self._engine,
             snapshot_cfg=self._cfg.snapshot_cfg,
             destructive_approval=self._approval,
+            ui=self._ui,
         )
 
         # Boot snapshot into memory (logged as a tool call).
@@ -82,6 +85,7 @@ class BrowserAgent:
 
         plan = self._build_plan(task=task, snapshot=snap)
         self._memory.add_step(f"PLAN: {plan}")
+        self._ui.status("Начинаю выполнение плана")
 
         for step_idx in range(1, self._cfg.max_steps + 1):
             if time.monotonic() - start > self._cfg.max_seconds:
@@ -111,7 +115,9 @@ class BrowserAgent:
         (last 1-2 snapshots + step log) rather than an ever-growing chat history.
         """
         snap = self._memory.last_snapshots[-1] if self._memory.last_snapshots else {}
-        sub_hints = self._subagent_hints(task=task)
+        sub_hints, nav_subgoal = self._subagent_hints(task=task)
+        if nav_subgoal:
+            self._ui.status(nav_subgoal)
 
         user_state = {
             "task": task,
@@ -194,7 +200,7 @@ class BrowserAgent:
             data = _parse_json(content)
             if data and data.get("status") == "need_clarification":
                 q = str(data.get("question") or "Please уточните.")
-                answer = input(f"AGENT QUESTION: {q}\nYour answer: ").strip()
+                answer = self._ui.ask(f"AGENT QUESTION: {q}\nYour answer: ").strip()
                 self._memory.add_step(f"USER clarification: {answer}")
                 messages.append({"role": "user", "content": f"User clarification: {answer}"})
                 continue
@@ -238,19 +244,21 @@ class BrowserAgent:
         resp = self._chat.create(messages=messages, tools=None)
         return (resp.choices[0].message.content or "").strip()
 
-    def _subagent_hints(self, *, task: str) -> str | None:
+    def _subagent_hints(self, *, task: str) -> tuple[str | None, str | None]:
         if not self._cfg.use_subagents:
-            return None
+            return None, None
         if not self._memory.last_snapshots:
-            return None
+            return None, None
         snap = self._memory.last_snapshots[-1]
         memory = self._memory.summary()
 
         hints: dict[str, Any] = {}
+        nav_subgoal: str | None = None
 
         try:
             if self._nav_agent is not None:
                 nav = self._nav_agent.suggest(task=task, snapshot=snap, memory=memory)
+                nav_subgoal = nav.next_subgoal.strip() or None
                 hints["navigation_agent"] = {
                     "should_navigate": nav.should_navigate,
                     "url": nav.url,
@@ -273,6 +281,9 @@ class BrowserAgent:
                 }
         except Exception as e:
             log.debug("Subagent hints failed: %s", e)
-            return None
+            return None, None
 
-        return "Sub-agent hints (JSON, advisory only):\n" + json.dumps(hints, ensure_ascii=False)
+        return (
+            "Sub-agent hints (JSON, advisory only):\n" + json.dumps(hints, ensure_ascii=False),
+            nav_subgoal,
+        )
