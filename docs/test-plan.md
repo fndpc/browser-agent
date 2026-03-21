@@ -82,6 +82,9 @@ python3 -m pip install -U pip
 pip install -r requirements-dev.txt
 python3 -m playwright install chromium
 
+# if you hit dependency mismatches (e.g. unexpected keyword argument 'proxies')
+pip install -U --force-reinstall -r requirements-dev.txt
+
 # checks
 python3 -m ruff check .
 python3 -m ruff format . --check

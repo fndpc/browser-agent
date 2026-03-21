@@ -22,6 +22,12 @@ python3 -m pip install -U pip
 pip install -r requirements-dev.txt
 ```
 
+Если ранее уже ставили зависимости и видите ошибку вида `unexpected keyword argument 'proxies'`, переустановите pinned зависимости:
+
+```sh
+pip install -U --force-reinstall -r requirements-dev.txt
+```
+
 2. Установите браузер для Playwright:
 
 ```sh
@@ -35,8 +41,10 @@ python3 -m playwright install chromium
 ```sh
 export OPENAI_API_KEY="..."
 export OPENAI_MODEL="gpt-4-turbo"  # или аналог, который доступен в вашем аккаунте
-export OPENAI_BASE_URL="https://ru-2.gateway.nekocode.app/alpha"
+export OPENAI_BASE_URL="https://ru-2.gateway.nekocode.app/alpha/v1"
 ```
+
+Также можно положить эти значения в `.env` в корне проекта (файл будет автоматически подхвачен при запуске).
 
 ## Запуск
 

@@ -34,6 +34,9 @@ python3 -m pip install -U pip
 pip install -r requirements-dev.txt
 python3 -m playwright install chromium
 
+# если были несовместимые версии (например ошибка про proxies)
+pip install -U --force-reinstall -r requirements-dev.txt
+
 # checks
 python3 -m ruff check .
 python3 -m ruff format . --check

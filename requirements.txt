@@ -2,4 +2,4 @@
 # If you want to update pins, change versions here intentionally.
 openai==1.30.5
 playwright==1.44.0
-
+httpx==0.27.2
