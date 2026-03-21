@@ -222,30 +222,108 @@ class BrowserEngine:
 
         return snapshot
 
-    def _regex(self, description: str) -> re.Pattern[str]:
-        # Broad fuzzy matching by case-insensitive regex, escaping user input.
-        d = description.strip()
+    def _name_regexes(self, description: str) -> list[re.Pattern[str]]:
+        """
+        Tools receive a free-form `description` from the model. In practice models sometimes
+        pass a full sentence instead of a short UI label. We extract a few likely UI strings:
+        - quoted segments ("..." / '...' / «...»)
+        - id/name/placeholder/aria_label hints embedded in the text
+        - keyword fallback (OR of a few meaningful tokens)
+        """
+        d = (description or "").strip()
         if not d:
-            return re.compile(r"^$")
-        return re.compile(re.escape(d), flags=re.IGNORECASE)
+            return [re.compile(r"^$")]
+
+        candidates: list[str] = []
+
+        # Quoted segments tend to contain the real button/label text.
+        for m in re.finditer(r"['\"“”«»](.{1,80}?)['\"“”«»]", d):
+            s = m.group(1).strip()
+            if s:
+                candidates.append(s)
+
+        # Common hint patterns
+        for m in re.finditer(r"\b(id|name|placeholder|aria_label|aria-label)\b[^'\"«»]{0,20}['\"«»](.{1,80}?)['\"»]", d, flags=re.IGNORECASE):
+            s = m.group(2).strip()
+            if s:
+                candidates.append(s)
+
+        # If the description is short already, keep it.
+        if len(d) <= 80:
+            candidates.append(d)
+
+        # Keyword fallback
+        tokens = [t for t in re.split(r"[^0-9A-Za-zА-Яа-яЁё]+", d) if len(t) >= 3]
+        # drop some stopwords
+        stop = {
+            "ввожу",
+            "ввести",
+            "поле",
+            "кнопку",
+            "нажму",
+            "нажать",
+            "чтобы",
+            "и",
+            "или",
+            "по",
+            "на",
+            "в",
+            "the",
+            "and",
+            "click",
+            "type",
+            "enter",
+            "search",
+        }
+        keywords: list[str] = []
+        for t in tokens:
+            tl = t.lower()
+            if tl in stop:
+                continue
+            if tl not in (k.lower() for k in keywords):
+                keywords.append(t)
+            if len(keywords) >= 6:
+                break
+        if keywords:
+            candidates.append("|".join(keywords))
+
+        # Dedup and compile (case-insensitive, search semantics).
+        seen: set[str] = set()
+        out: list[re.Pattern[str]] = []
+        for s in candidates:
+            s = s.strip()
+            if not s:
+                continue
+            key = s.lower()
+            if key in seen:
+                continue
+            seen.add(key)
+            # If it's our keyword OR string, keep it as regex; else escape.
+            if "|" in s and " " not in s:
+                out.append(re.compile(s, flags=re.IGNORECASE))
+            else:
+                out.append(re.compile(re.escape(s), flags=re.IGNORECASE))
+        return out or [re.compile(re.escape(d), flags=re.IGNORECASE)]
 
     def find_element_and_click(self, description: str) -> dict[str, Any]:
         page = self.page
-        rx = self._regex(description)
         candidates = []
 
         def add(locator, label: str) -> None:
             candidates.append((locator, label))
 
-        add(page.get_by_role("button", name=rx), "role=button")
-        add(page.get_by_role("link", name=rx), "role=link")
-        add(page.get_by_role("menuitem", name=rx), "role=menuitem")
-        add(page.get_by_text(rx, exact=False), "text")
-        add(page.get_by_label(rx), "label")
+        regexes = self._name_regexes(description)
+        for rx in regexes:
+            add(page.get_by_role("button", name=rx), f"role=button/{rx.pattern}")
+            add(page.get_by_role("link", name=rx), f"role=link/{rx.pattern}")
+            add(page.get_by_role("menuitem", name=rx), f"role=menuitem/{rx.pattern}")
+            add(page.get_by_text(rx, exact=False), f"text/{rx.pattern}")
+            add(page.get_by_label(rx), f"label/{rx.pattern}")
 
         last_err: str | None = None
         for loc, kind in candidates:
             try:
+                loc.first.scroll_into_view_if_needed(timeout=1_500)
                 loc.first.click(timeout=3_000)
                 return {"ok": True, "clicked_via": kind, "url": page.url, "title": page.title()}
             except TimeoutError as e:
@@ -255,27 +333,35 @@ class BrowserEngine:
 
         return {"ok": False, "error": last_err or "not_found", "url": page.url}
 
-    def type_text_to_field(self, description: str, text: str) -> dict[str, Any]:
+    def type_text_to_field(self, description: str, text: str, press_enter: bool = False) -> dict[str, Any]:
         page = self.page
-        rx = self._regex(description)
         candidates = []
 
         def add(locator, label: str) -> None:
             candidates.append((locator, label))
 
-        add(page.get_by_label(rx), "label")
-        add(page.get_by_placeholder(rx), "placeholder")
-        add(page.get_by_role("textbox", name=rx), "role=textbox")
-        add(page.get_by_role("searchbox", name=rx), "role=searchbox")
-        add(page.get_by_text(rx, exact=False), "text-near")
+        regexes = self._name_regexes(description)
+        for rx in regexes:
+            add(page.get_by_label(rx), f"label/{rx.pattern}")
+            add(page.get_by_placeholder(rx), f"placeholder/{rx.pattern}")
+            add(page.get_by_role("searchbox", name=rx), f"role=searchbox/{rx.pattern}")
+            add(page.get_by_role("textbox", name=rx), f"role=textbox/{rx.pattern}")
+            add(page.get_by_text(rx, exact=False), f"text-near/{rx.pattern}")
 
         last_err: str | None = None
         for loc, kind in candidates:
             try:
                 target = loc.first
-                target.click(timeout=3_000)
-                target.fill(text, timeout=3_000)
-                return {"ok": True, "typed_via": kind, "url": page.url}
+                target.scroll_into_view_if_needed(timeout=1_500)
+                # Prefer fill/focus without click: some UIs block pointer events but allow programmatic input.
+                try:
+                    target.fill(text, timeout=3_000)
+                except Exception:
+                    target.click(timeout=3_000)
+                    target.fill(text, timeout=3_000)
+                if press_enter:
+                    page.keyboard.press("Enter")
+                return {"ok": True, "typed_via": kind, "pressed_enter": press_enter, "url": page.url}
             except TimeoutError as e:
                 last_err = f"timeout via {kind}: {e}"
             except Error as e:
@@ -285,14 +371,18 @@ class BrowserEngine:
 
     def wait_for_element(self, description: str, timeout_ms: int) -> dict[str, Any]:
         page = self.page
-        rx = self._regex(description)
-        candidates = [
-            (page.get_by_role("button", name=rx), "role=button"),
-            (page.get_by_role("link", name=rx), "role=link"),
-            (page.get_by_label(rx), "label"),
-            (page.get_by_placeholder(rx), "placeholder"),
-            (page.get_by_text(rx, exact=False), "text"),
-        ]
+        candidates = []
+        regexes = self._name_regexes(description)
+        for rx in regexes:
+            candidates.extend(
+                [
+                    (page.get_by_role("button", name=rx), f"role=button/{rx.pattern}"),
+                    (page.get_by_role("link", name=rx), f"role=link/{rx.pattern}"),
+                    (page.get_by_label(rx), f"label/{rx.pattern}"),
+                    (page.get_by_placeholder(rx), f"placeholder/{rx.pattern}"),
+                    (page.get_by_text(rx, exact=False), f"text/{rx.pattern}"),
+                ]
+            )
         last_err: str | None = None
         for loc, kind in candidates:
             try:

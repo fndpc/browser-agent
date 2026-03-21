@@ -50,16 +50,6 @@ def main(argv: list[str] | None = None) -> int:
     ui = UI(UIConfig(color=not bool(args.no_color)))
     ui.status(f"Логи пишутся в файл: {log_file}")
 
-    if args.task is None:
-        ui.meta("Enter a task (example: 'Open https://example.com and click More information'):")
-        task = ui.ask("> ").strip()
-    else:
-        task = args.task.strip()
-
-    if not task:
-        ui.meta("Empty task, exiting.")
-        return 2
-
     cfg = load_openai_config(model_override=args.model)
     chat = OpenAIChat(cfg)
     log.info("OpenAI model=%s base_url=%s", chat.model, cfg.base_url)
@@ -74,9 +64,43 @@ def main(argv: list[str] | None = None) -> int:
             max_seconds=int(args.max_seconds),
             use_subagents=not bool(args.no_subagents),
         )
-        agent = BrowserAgent(chat=chat, engine=engine, cfg=agent_cfg, ui=ui)
-        result = agent.run(task)
-        ui.result(f"\nRESULT: {result}")
+
+        def run_one(task: str) -> None:
+            agent = BrowserAgent(chat=chat, engine=engine, cfg=agent_cfg, ui=ui)
+            result = agent.run(task)
+            ui.result(f"\nRESULT: {result}\n")
+
+        # If a task was provided, run it once first.
+        if args.task:
+            task0 = args.task.strip()
+            if not task0:
+                ui.meta("Empty task, exiting.")
+                return 2
+            run_one(task0)
+
+        ui.meta("Привет! Чем могу помочь?")
+        ui.meta("Команды: :exit (выйти), :help (помощь). Любой другой текст = новая задача.")
+
+        # Interactive loop: keep browser/session alive until user exits.
+        while True:
+            try:
+                raw = ui.ask("> ")
+            except (EOFError, KeyboardInterrupt):
+                ui.status("Выход.")
+                break
+
+            task = (raw or "").strip()
+            if not task:
+                continue
+            if task in {":q", ":quit", ":exit", "exit", "quit"}:
+                ui.status("Выход.")
+                break
+            if task in {":help", "help"}:
+                ui.meta("Команды: :exit (выйти), :help (помощь).")
+                continue
+
+            run_one(task)
+
         return 0
     finally:
         log.info("Closing browser...")

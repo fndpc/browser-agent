@@ -95,6 +95,8 @@ class DOMAgent:
                     "Given a compact snapshot, pick the next best UI action. "
                     "You MUST choose one tool among: "
                     "find_element_and_click, type_text_to_field, wait_for_element, get_current_page_snapshot. "
+                    "For `description`, output a SHORT UI phrase taken from the snapshot (button/link text, placeholder, aria_label). "
+                    "Do NOT output long explanatory sentences. "
                     "Return STRICT JSON only."
                 ),
             },
@@ -130,4 +132,3 @@ class DOMAgent:
             timeout_ms=(None if data.get("timeout_ms") is None else int(data.get("timeout_ms"))),
             rationale=str(data.get("rationale") or ""),
         )
-

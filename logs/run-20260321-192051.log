@@ -1,0 +1,4 @@
+2026-03-21 19:20:51 | INFO | browser_agent.cli | OpenAI model=gpt-5-mini-2025-08-07 base_url=https://ru-2.gateway.nekocode.app/alpha/v1
+2026-03-21 19:20:51 | DEBUG | asyncio | Using selector: EpollSelector
+2026-03-21 19:20:51 | INFO | browser_agent.browser | Launching persistent Chromium context at .browser_profile
+2026-03-21 19:21:03 | INFO | browser_agent.cli | Closing browser...

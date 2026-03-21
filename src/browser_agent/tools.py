@@ -39,7 +39,10 @@ def tool_schemas() -> list[dict[str, Any]]:
             "type": "function",
             "function": {
                 "name": "find_element_and_click",
-                "description": "Find an element by natural-language description and click it.",
+                "description": (
+                    "Find an element by short UI text/label (e.g. button text, link text, aria-label) and click it. "
+                    "Pass a concise phrase that likely appears on the page, not a full sentence."
+                ),
                 "parameters": {
                     "type": "object",
                     "properties": {"description": {"type": "string"}},
@@ -51,10 +54,20 @@ def tool_schemas() -> list[dict[str, Any]]:
             "type": "function",
             "function": {
                 "name": "type_text_to_field",
-                "description": "Find an input field by description and type text into it (fill).",
+                "description": (
+                    "Find an input field by short label/placeholder/aria-label and type text into it (fill). "
+                    "Use press_enter=true for search boxes. Avoid long explanatory sentences."
+                ),
                 "parameters": {
                     "type": "object",
-                    "properties": {"description": {"type": "string"}, "text": {"type": "string"}},
+                    "properties": {
+                        "description": {"type": "string"},
+                        "text": {"type": "string"},
+                        "press_enter": {
+                            "type": "boolean",
+                            "description": "If true, press Enter after typing (useful for search boxes).",
+                        },
+                    },
                     "required": ["description", "text"],
                 },
             },
@@ -63,7 +76,10 @@ def tool_schemas() -> list[dict[str, Any]]:
             "type": "function",
             "function": {
                 "name": "wait_for_element",
-                "description": "Wait until an element described by natural language appears.",
+                "description": (
+                    "Wait until an element appears, described by short UI text/label/placeholder. "
+                    "Use a concise phrase that likely exists on the page."
+                ),
                 "parameters": {
                     "type": "object",
                     "properties": {
@@ -128,7 +144,9 @@ def _click(ctx: ToolContext, args: dict[str, Any]) -> dict[str, Any]:
 def _type(ctx: ToolContext, args: dict[str, Any]) -> dict[str, Any]:
     _guard(ctx, tool_name="type_text_to_field", args=args)
     return ctx.engine.type_text_to_field(
-        description=str(args["description"]), text=str(args["text"])
+        description=str(args["description"]),
+        text=str(args["text"]),
+        press_enter=bool(args.get("press_enter", False)),
     )
 
 
@@ -165,6 +183,13 @@ def dispatch_tool(ctx: ToolContext, *, name: str, arguments_json: str) -> dict[s
     except json.JSONDecodeError as e:
         raise ValueError(f"Invalid tool arguments JSON for {name}: {e}") from e
 
+    # Don't run spinner while blocking on user input.
+    if name == "confirm_destructive_action":
+        log.info("TOOL %s args=%s", name, args)
+        res = _TOOL_IMPL[name](ctx, args)
+        log.info("TOOL %s result=%s", name, _short(res))
+        return res
+
     msg = _status_hint(name=name, args=args)
     with ctx.ui.loading(msg):
         log.info("TOOL %s args=%s", name, args)
@@ -175,15 +200,15 @@ def dispatch_tool(ctx: ToolContext, *, name: str, arguments_json: str) -> dict[s
 
 def _status_hint(*, name: str, args: dict[str, Any]) -> str:
     if name == "navigate_to_url":
-        return f"Открываю {args.get('url')}"
+        return f"Открываю {_short_human(args.get('url'), 50)}"
     elif name == "get_current_page_snapshot":
         return "Снимаю snapshot страницы"
     elif name == "find_element_and_click":
-        return f"Кликаю: {args.get('description')}"
+        return f"Кликаю: {_short_human(args.get('description'))}"
     elif name == "type_text_to_field":
-        return f"Ввожу текст в поле: {args.get('description')}"
+        return f"Ввожу текст в поле: {_short_human(args.get('description'))}"
     elif name == "wait_for_element":
-        return f"Жду элемент: {args.get('description')}"
+        return f"Жду элемент: {_short_human(args.get('description'))}"
     elif name == "confirm_destructive_action":
         return "Запрашиваю подтверждение пользователя"
     return f"Выполняю: {name}"
@@ -192,3 +217,10 @@ def _status_hint(*, name: str, args: dict[str, Any]) -> str:
 def _short(obj: Any, limit: int = 400) -> str:
     s = json.dumps(obj, ensure_ascii=False, separators=(",", ":"))
     return s if len(s) <= limit else s[: limit - 1] + "…"
+
+
+def _short_human(s: Any, limit: int = 60) -> str:
+    t = str(s or "").replace("\n", " ").strip()
+    if len(t) <= limit:
+        return t
+    return t[: max(0, limit - 1)] + "…"

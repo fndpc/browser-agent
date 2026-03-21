@@ -136,6 +136,11 @@ class BrowserAgent:
                     "Never request or output full HTML. "
                     "Whenever you call tools, include a short user-facing sentence in `content` "
                     "describing what you are about to do. "
+                    "When calling tools that take `description`, use a SHORT UI phrase (button text, link text, placeholder, aria-label), "
+                    "not a full explanation."
+                    "Only call confirm_destructive_action for truly destructive/irreversible actions "
+                    "(payments, deleting data, sending messages/forms). "
+                    "Typing a search query and running a search is NOT destructive. "
                     "If you need clarification, output JSON: "
                     '{"status":"need_clarification","question":"..."} '
                     "If the task is done, output JSON: "

@@ -4,6 +4,7 @@ import os
 import sys
 import threading
 import time
+import shutil
 from contextlib import contextmanager
 from dataclasses import dataclass
 
@@ -78,7 +79,16 @@ class UI:
 
         stop = threading.Event()
         frames = [".", "..", "..."]
-        prefix = self._wrap(message + " ", ANSI_GRAY)
+        msg = (message or "").replace("\n", " ").strip()
+        try:
+            width = shutil.get_terminal_size().columns
+        except Exception:
+            width = 80
+        # Keep it on a single line to avoid wrap spam.
+        max_msg = max(10, width - 6)
+        if len(msg) > max_msg:
+            msg = msg[: max_msg - 1] + "…"
+        prefix = self._wrap(msg + " ", ANSI_GRAY)
 
         def run() -> None:
             i = 0
@@ -98,5 +108,5 @@ class UI:
             stop.set()
             t.join(timeout=1.0)
             # Clear the spinner line.
-            sys.stdout.write("\r" + (" " * (len(message) + 8)) + "\r")
+            sys.stdout.write("\r" + (" " * (width - 1)) + "\r")
             sys.stdout.flush()
