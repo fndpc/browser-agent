@@ -165,26 +165,28 @@ def dispatch_tool(ctx: ToolContext, *, name: str, arguments_json: str) -> dict[s
     except json.JSONDecodeError as e:
         raise ValueError(f"Invalid tool arguments JSON for {name}: {e}") from e
 
-    _status_hint(ctx, name=name, args=args)
-    log.info("TOOL %s args=%s", name, args)
-    res = _TOOL_IMPL[name](ctx, args)
-    log.info("TOOL %s result=%s", name, _short(res))
+    msg = _status_hint(name=name, args=args)
+    with ctx.ui.loading(msg):
+        log.info("TOOL %s args=%s", name, args)
+        res = _TOOL_IMPL[name](ctx, args)
+        log.info("TOOL %s result=%s", name, _short(res))
     return res
 
 
-def _status_hint(ctx: ToolContext, *, name: str, args: dict[str, Any]) -> None:
+def _status_hint(*, name: str, args: dict[str, Any]) -> str:
     if name == "navigate_to_url":
-        ctx.ui.status(f"Открываю {args.get('url')}")
+        return f"Открываю {args.get('url')}"
     elif name == "get_current_page_snapshot":
-        ctx.ui.status("Снимаю snapshot страницы")
+        return "Снимаю snapshot страницы"
     elif name == "find_element_and_click":
-        ctx.ui.status(f"Кликаю: {args.get('description')}")
+        return f"Кликаю: {args.get('description')}"
     elif name == "type_text_to_field":
-        ctx.ui.status(f"Ввожу текст в поле: {args.get('description')}")
+        return f"Ввожу текст в поле: {args.get('description')}"
     elif name == "wait_for_element":
-        ctx.ui.status(f"Жду элемент: {args.get('description')}")
+        return f"Жду элемент: {args.get('description')}"
     elif name == "confirm_destructive_action":
-        ctx.ui.status("Запрашиваю подтверждение пользователя")
+        return "Запрашиваю подтверждение пользователя"
+    return f"Выполняю: {name}"
 
 
 def _short(obj: Any, limit: int = 400) -> str:

@@ -35,13 +35,15 @@ class LoggingConfig:
 
 
 def setup_logging(cfg: LoggingConfig) -> None:
-    level = logging.DEBUG if cfg.verbose else logging.INFO
+    # Console should be quiet by default: only real problems.
+    # Detailed request/tool logs go to the log file.
+    console_level = logging.INFO if cfg.verbose else logging.WARNING
     root = logging.getLogger()
     root.handlers.clear()
     root.setLevel(logging.DEBUG)  # let handlers filter
 
     console = logging.StreamHandler(sys.stdout)
-    console.setLevel(level)
+    console.setLevel(console_level)
     console.setFormatter(
         GrayFormatter(
             fmt="%(asctime)s | %(levelname)s | %(name)s | %(message)s",

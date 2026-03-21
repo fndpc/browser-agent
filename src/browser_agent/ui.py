@@ -2,6 +2,9 @@ from __future__ import annotations
 
 import os
 import sys
+import threading
+import time
+from contextlib import contextmanager
 from dataclasses import dataclass
 
 
@@ -42,7 +45,11 @@ class UI:
         print(self._wrap(s, ANSI_GRAY))
 
     def status(self, s: str) -> None:
-        self.meta(f"STATUS: {s}")
+        self.meta(s)
+
+    def assistant(self, s: str) -> None:
+        """Assistant messages / 'thoughts' shown to the user."""
+        print(self._wrap(s, ANSI_BRIGHT))
 
     def result(self, s: str) -> None:
         """Final answer / result for the user."""
@@ -57,3 +64,39 @@ class UI:
         ).strip().lower()
         return ans == "y"
 
+    @contextmanager
+    def loading(self, message: str) -> None:
+        """
+        Non-blocking spinner so the user sees the app is working.
+        Uses a single terminal line and clears it when done.
+        """
+        if not _isatty():
+            # Non-interactive: print a single status line.
+            self.status(message + " ...")
+            yield
+            return
+
+        stop = threading.Event()
+        frames = [".", "..", "..."]
+        prefix = self._wrap(message + " ", ANSI_GRAY)
+
+        def run() -> None:
+            i = 0
+            while not stop.is_set():
+                frame = frames[i % len(frames)]
+                line = prefix + frame
+                sys.stdout.write("\r" + line)
+                sys.stdout.flush()
+                i += 1
+                time.sleep(0.35)
+
+        t = threading.Thread(target=run, daemon=True)
+        t.start()
+        try:
+            yield
+        finally:
+            stop.set()
+            t.join(timeout=1.0)
+            # Clear the spinner line.
+            sys.stdout.write("\r" + (" " * (len(message) + 8)) + "\r")
+            sys.stdout.flush()

@@ -134,6 +134,8 @@ class BrowserAgent:
                     "You are the main browser automation agent. "
                     "You MUST use tools to act. "
                     "Never request or output full HTML. "
+                    "Whenever you call tools, include a short user-facing sentence in `content` "
+                    "describing what you are about to do. "
                     "If you need clarification, output JSON: "
                     '{"status":"need_clarification","question":"..."} '
                     "If the task is done, output JSON: "
@@ -151,10 +153,14 @@ class BrowserAgent:
         ]
 
         for hop in range(1, 8):
-            resp = self._chat.create(messages=messages, tools=self._tools)
+            with self._ui.loading("Думаю"):
+                resp = self._chat.create(messages=messages, tools=self._tools)
             msg = resp.choices[0].message
 
             if msg.tool_calls:
+                # If the model included a user-facing line alongside tool calls, show it.
+                if msg.content and msg.content.strip():
+                    self._ui.assistant(msg.content.strip())
                 messages.append(
                     {"role": "assistant", "content": "", "tool_calls": [_tool_call_to_dict(tc) for tc in msg.tool_calls]}
                 )
@@ -196,6 +202,12 @@ class BrowserAgent:
 
             content = (msg.content or "").strip()
             self._memory.add_step(f"STEP {step_idx}.{hop}: assistant={content[:200]}")
+
+            # If the assistant decided to speak to the user (thoughts/instructions), show it.
+            if content:
+                # Don't show raw JSON control frames.
+                if not (content.startswith("{") and content.endswith("}")):
+                    self._ui.assistant(content)
 
             data = _parse_json(content)
             if data and data.get("status") == "need_clarification":

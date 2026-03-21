@@ -48,7 +48,7 @@ def main(argv: list[str] | None = None) -> int:
         log_file = Path("logs") / f"run-{ts}.log"
     setup_logging(LoggingConfig(verbose=bool(args.verbose), log_file=log_file))
     ui = UI(UIConfig(color=not bool(args.no_color)))
-    ui.meta(f"Log file: {log_file}")
+    ui.status(f"Логи пишутся в файл: {log_file}")
 
     if args.task is None:
         ui.meta("Enter a task (example: 'Open https://example.com and click More information'):")
@@ -62,8 +62,7 @@ def main(argv: list[str] | None = None) -> int:
 
     cfg = load_openai_config(model_override=args.model)
     chat = OpenAIChat(cfg)
-    ui.meta(f"OpenAI model: {chat.model}")
-    ui.meta(f"OpenAI base_url: {cfg.base_url}")
+    log.info("OpenAI model=%s base_url=%s", chat.model, cfg.base_url)
 
     browser_cfg = BrowserConfig(profile_dir=args.profile_dir, slowmo_ms=int(args.slowmo_ms))
     engine = BrowserEngine(browser_cfg)
