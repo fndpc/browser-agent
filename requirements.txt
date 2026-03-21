@@ -1,0 +1,5 @@
+# Pinned runtime dependencies (tested/picked for Python 3.11+).
+# If you want to update pins, change versions here intentionally.
+openai==1.30.5
+playwright==1.44.0
+
