@@ -17,6 +17,13 @@ log = logging.getLogger("browser_agent.browser")
 class BrowserConfig:
     profile_dir: Path
     slowmo_ms: int = 0
+    # If `no_viewport=True`, Playwright won't emulate a fixed viewport and the page layout will
+    # match the real window size. This avoids "desktop layout in a tiny window" clipping.
+    no_viewport: bool = True
+    start_maximized: bool = True
+    window_width: int = 1600
+    window_height: int = 1000
+    # Only used when `no_viewport=False`.
     viewport_width: int = 1280
     viewport_height: int = 800
 
@@ -39,11 +46,28 @@ class BrowserEngine:
         self._pw = sync_playwright().start()
         chromium = self._pw.chromium
         log.info("Launching persistent Chromium context at %s", self._cfg.profile_dir)
+
+        launch_args: list[str] = []
+        if self._cfg.start_maximized:
+            launch_args.append("--start-maximized")
+        else:
+            launch_args.append(f"--window-size={self._cfg.window_width},{self._cfg.window_height}")
+
+        ctx_kwargs: dict[str, Any] = {
+            "user_data_dir": str(self._cfg.profile_dir),
+            "headless": False,
+            "slow_mo": self._cfg.slowmo_ms,
+            "args": launch_args,
+            "no_viewport": self._cfg.no_viewport,
+        }
+        if not self._cfg.no_viewport:
+            ctx_kwargs["viewport"] = {
+                "width": self._cfg.viewport_width,
+                "height": self._cfg.viewport_height,
+            }
+
         self._context = chromium.launch_persistent_context(
-            user_data_dir=str(self._cfg.profile_dir),
-            headless=False,
-            slow_mo=self._cfg.slowmo_ms,
-            viewport={"width": self._cfg.viewport_width, "height": self._cfg.viewport_height},
+            **ctx_kwargs,
         )
         self._context.on("page", self._on_new_page)
 
@@ -323,9 +347,30 @@ class BrowserEngine:
         last_err: str | None = None
         for loc, kind in candidates:
             try:
-                loc.first.scroll_into_view_if_needed(timeout=1_500)
-                loc.first.click(timeout=3_000)
-                return {"ok": True, "clicked_via": kind, "url": page.url, "title": page.title()}
+                # Try a few matches and prefer enabled elements (e.g. avoid disabled "Увеличить").
+                count = min(loc.count(), 6)
+                for i in range(count):
+                    el = loc.nth(i)
+                    try:
+                        if not el.is_visible():
+                            continue
+                        if not el.is_enabled():
+                            continue
+                    except Exception:
+                        # If we can't query state, still try to click.
+                        pass
+                    try:
+                        el.scroll_into_view_if_needed(timeout=1_500)
+                    except Exception:
+                        pass
+                    el.click(timeout=3_000)
+                    return {
+                        "ok": True,
+                        "clicked_via": kind,
+                        "match_index": i,
+                        "url": page.url,
+                        "title": page.title(),
+                    }
             except TimeoutError as e:
                 last_err = f"timeout via {kind}: {e}"
             except Error as e:
@@ -351,17 +396,42 @@ class BrowserEngine:
         last_err: str | None = None
         for loc, kind in candidates:
             try:
-                target = loc.first
-                target.scroll_into_view_if_needed(timeout=1_500)
-                # Prefer fill/focus without click: some UIs block pointer events but allow programmatic input.
-                try:
-                    target.fill(text, timeout=3_000)
-                except Exception:
-                    target.click(timeout=3_000)
-                    target.fill(text, timeout=3_000)
+                count = min(loc.count(), 4)
+                for i in range(count):
+                    target = loc.nth(i)
+                    try:
+                        if not target.is_visible():
+                            continue
+                        # is_editable is better than is_enabled for inputs
+                        if not target.is_editable():
+                            continue
+                    except Exception:
+                        pass
+                    try:
+                        target.scroll_into_view_if_needed(timeout=1_500)
+                    except Exception:
+                        pass
+                    # Prefer fill without click; fallback to click then fill.
+                    try:
+                        target.fill(text, timeout=3_000)
+                    except Exception:
+                        target.click(timeout=3_000)
+                        target.fill(text, timeout=3_000)
+                    # Some search boxes only react properly to typing, not fill.
+                    if press_enter:
+                        try:
+                            target.press("Enter", timeout=2_000)
+                        except Exception:
+                            page.keyboard.press("Enter")
+                    return {
+                        "ok": True,
+                        "typed_via": kind,
+                        "match_index": i,
+                        "pressed_enter": press_enter,
+                        "url": page.url,
+                    }
                 if press_enter:
                     page.keyboard.press("Enter")
-                return {"ok": True, "typed_via": kind, "pressed_enter": press_enter, "url": page.url}
             except TimeoutError as e:
                 last_err = f"timeout via {kind}: {e}"
             except Error as e:
@@ -384,9 +454,11 @@ class BrowserEngine:
                 ]
             )
         last_err: str | None = None
+        # Interpret timeout as a total budget across strategies, not per-strategy.
+        per_timeout = max(800, int(timeout_ms / max(1, len(candidates))))
         for loc, kind in candidates:
             try:
-                loc.first.wait_for(timeout=timeout_ms)
+                loc.first.wait_for(timeout=per_timeout)
                 return {"ok": True, "found_via": kind, "url": page.url}
             except TimeoutError as e:
                 last_err = f"timeout via {kind}: {e}"

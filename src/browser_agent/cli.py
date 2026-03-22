@@ -25,6 +25,16 @@ def _parse_args(argv: list[str] | None) -> argparse.Namespace:
         help="Persistent Chromium profile directory",
     )
     p.add_argument("--slowmo-ms", type=int, default=0, help="Playwright slow_mo in ms")
+    p.add_argument(
+        "--fixed-viewport",
+        action="store_true",
+        help="Enable fixed viewport emulation (may cause clipping if window is smaller than viewport).",
+    )
+    p.add_argument("--no-maximize", action="store_true", help="Do not start maximized")
+    p.add_argument("--window-width", type=int, default=1600)
+    p.add_argument("--window-height", type=int, default=1000)
+    p.add_argument("--viewport-width", type=int, default=1280, help="Used only if fixed viewport is enabled")
+    p.add_argument("--viewport-height", type=int, default=800, help="Used only if fixed viewport is enabled")
     p.add_argument("--max-steps", type=int, default=40)
     p.add_argument("--max-seconds", type=int, default=15 * 60)
     p.add_argument("--model", type=str, default=None, help="Override OPENAI_MODEL")
@@ -55,6 +65,16 @@ def main(argv: list[str] | None = None) -> int:
     log.info("OpenAI model=%s base_url=%s", chat.model, cfg.base_url)
 
     browser_cfg = BrowserConfig(profile_dir=args.profile_dir, slowmo_ms=int(args.slowmo_ms))
+    browser_cfg = BrowserConfig(
+        profile_dir=args.profile_dir,
+        slowmo_ms=int(args.slowmo_ms),
+        no_viewport=not bool(args.fixed_viewport),
+        start_maximized=not bool(args.no_maximize),
+        window_width=int(args.window_width),
+        window_height=int(args.window_height),
+        viewport_width=int(args.viewport_width),
+        viewport_height=int(args.viewport_height),
+    )
     engine = BrowserEngine(browser_cfg)
     engine.start()
 

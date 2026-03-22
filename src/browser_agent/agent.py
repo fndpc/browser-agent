@@ -5,6 +5,7 @@ import logging
 import time
 from dataclasses import dataclass, field
 from typing import Any
+import uuid
 
 from browser_agent.dom_snapshot import SnapshotConfig, format_snapshot_for_llm
 from browser_agent.openai_client import OpenAIChat
@@ -54,6 +55,14 @@ def _tool_call_to_dict(tc: Any) -> dict[str, Any]:
         "type": "function",
         "function": {"name": tc.function.name, "arguments": tc.function.arguments},
     }
+
+
+def _tool_call_id(tc: Any) -> str:
+    tid = getattr(tc, "id", None)
+    if isinstance(tid, str) and tid.strip():
+        return tid
+    # Some gateways/SDK combinations can produce missing tool call ids; keep the request valid.
+    return "call_local_" + uuid.uuid4().hex
 
 
 class BrowserAgent:
@@ -166,25 +175,46 @@ class BrowserAgent:
                 # If the model included a user-facing line alongside tool calls, show it.
                 if msg.content and msg.content.strip():
                     self._ui.assistant(msg.content.strip())
-                messages.append(
-                    {"role": "assistant", "content": "", "tool_calls": [_tool_call_to_dict(tc) for tc in msg.tool_calls]}
-                )
-                for tc in msg.tool_calls:
+                # Ensure every tool call has a non-empty id.
+                tc_pairs: list[tuple[Any, str]] = [(tc, _tool_call_id(tc)) for tc in msg.tool_calls]
+                tc_dicts = [
+                    {
+                        "id": tid,
+                        "type": "function",
+                        "function": {"name": tc.function.name, "arguments": tc.function.arguments},
+                    }
+                    for (tc, tid) in tc_pairs
+                ]
+                messages.append({"role": "assistant", "content": "", "tool_calls": tc_dicts})
+
+                # Execute tools and ALWAYS append a tool message for every tool_call_id.
+                expected_ids = [d["id"] for d in tc_dicts]
+                responded_ids: set[str] = set()
+
+                for tc, tc_id in tc_pairs:
                     name = tc.function.name
                     args_json = tc.function.arguments
                     self._memory.add_step(f"STEP {step_idx}.{hop}: tool={name} args={args_json}")
+                    out: dict[str, Any]
+                    fatal: BaseException | None = None
                     try:
                         out = dispatch_tool(tool_ctx, name=name, arguments_json=args_json)
-                    except Exception as e:
+                    except BaseException as e:
                         out = {"ok": False, "error": f"{type(e).__name__}: {e}"}
-
-                    messages.append(
-                        {
-                            "role": "tool",
-                            "tool_call_id": tc.id,
-                            "content": json.dumps(out, ensure_ascii=False),
-                        }
-                    )
+                        # Keep the request history consistent, but allow the process to stop afterwards.
+                        if isinstance(e, (KeyboardInterrupt, SystemExit)):
+                            fatal = e
+                    finally:
+                        messages.append(
+                            {
+                                "role": "tool",
+                                "tool_call_id": tc_id,
+                                "content": json.dumps(out, ensure_ascii=False),
+                            }
+                        )
+                        responded_ids.add(tc_id)
+                    if fatal is not None:
+                        raise fatal
 
                     if name == "get_current_page_snapshot" and isinstance(out, dict) and out.get("url"):
                         self._memory.add_snapshot(out)
@@ -194,6 +224,19 @@ class BrowserAgent:
                         self._memory.add_snapshot(refreshed)
 
                     if isinstance(out, dict) and out.get("ok") is False:
+                        err_txt = str(out.get("error") or "")
+                        if "not enabled" in err_txt or "is not enabled" in err_txt:
+                            messages.append(
+                                {
+                                    "role": "user",
+                                    "content": (
+                                        "The target element appears DISABLED (not enabled). "
+                                        "This often means a prerequisite isn't satisfied (e.g. choose delivery address/region, "
+                                        "close a modal/consent banner, or pick a store). "
+                                        "Ask the user to complete the prerequisite in the visible browser if needed, then continue."
+                                    ),
+                                }
+                            )
                         messages.append(
                             {
                                 "role": "user",
@@ -203,6 +246,23 @@ class BrowserAgent:
                                 ),
                             }
                         )
+
+                # Safety net: never send a tool_call without a tool response in the next request.
+                missing = [tid for tid in expected_ids if tid not in responded_ids]
+                for tid in missing:
+                    messages.append(
+                        {
+                            "role": "tool",
+                            "tool_call_id": tid,
+                            "content": json.dumps(
+                                {
+                                    "ok": False,
+                                    "error": "internal_error: missing tool response (auto-filled)",
+                                },
+                                ensure_ascii=False,
+                            ),
+                        }
+                    )
                 continue
 
             content = (msg.content or "").strip()

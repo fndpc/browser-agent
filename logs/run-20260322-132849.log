@@ -1,0 +1,280 @@
+2026-03-22 13:28:49 | INFO | browser_agent.cli | OpenAI model=gpt-5.1-2025-11-13 base_url=https://ru-2.gateway.nekocode.app/alpha/v1
+2026-03-22 13:28:49 | DEBUG | asyncio | Using selector: EpollSelector
+2026-03-22 13:28:50 | INFO | browser_agent.browser | Launching persistent Chromium context at .browser_profile
+2026-03-22 13:29:26 | INFO | browser_agent.tools | TOOL get_current_page_snapshot args={}
+2026-03-22 13:29:26 | INFO | browser_agent.tools | TOOL get_current_page_snapshot result={"url":"about:blank","title":"","viewport":{"w":1280,"h":800},"interactive":[],"visible_text":""}
+2026-03-22 13:29:27 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=2 tools=False
+2026-03-22 13:29:27 | DEBUG | httpcore.connection | connect_tcp.started host='ru-2.gateway.nekocode.app' port=443 local_address=None timeout=5.0 socket_options=None
+2026-03-22 13:29:27 | DEBUG | httpcore.connection | connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x72729897f560>
+2026-03-22 13:29:27 | DEBUG | httpcore.connection | start_tls.started ssl_context=<ssl.SSLContext object at 0x727298b1a4d0> server_hostname='ru-2.gateway.nekocode.app' timeout=5.0
+2026-03-22 13:29:27 | DEBUG | httpcore.connection | start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x72729897cbf0>
+2026-03-22 13:29:27 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-22 13:29:27 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-22 13:29:27 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-22 13:29:27 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-22 13:29:27 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-22 13:29:30 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Type', b'application/json'), (b'Date', b'Sun, 22 Mar 2026 10:29:30 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'299'), (b'X-Request-Id', b'9372cec0-e214-452a-9aa1-1ca2edcc06b7'), (b'X-Robots-Tag', b'noindex, nofollow'), (b'Transfer-Encoding', b'chunked')])
+2026-03-22 13:29:30 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-22 13:29:30 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-22 13:29:30 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-22 13:29:30 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-22 13:29:30 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-22 13:29:30 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=2 tools=False
+2026-03-22 13:29:30 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-22 13:29:30 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-22 13:29:30 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-22 13:29:30 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-22 13:29:30 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-22 13:29:31 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1206'), (b'Content-Type', b'application/json'), (b'Date', b'Sun, 22 Mar 2026 10:29:31 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'298'), (b'X-Request-Id', b'acb01bf0-36e9-4ef0-aa8e-f827b4ae0157'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-22 13:29:31 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-22 13:29:31 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-22 13:29:31 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-22 13:29:31 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-22 13:29:31 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-22 13:29:31 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=2 tools=False
+2026-03-22 13:29:31 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-22 13:29:31 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-22 13:29:31 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-22 13:29:31 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-22 13:29:31 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-22 13:29:33 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1022'), (b'Content-Type', b'application/json'), (b'Date', b'Sun, 22 Mar 2026 10:29:33 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'297'), (b'X-Request-Id', b'4380f4da-dbd6-4f1b-991b-0b6dce9d9d05'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-22 13:29:33 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-22 13:29:33 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-22 13:29:33 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-22 13:29:33 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-22 13:29:33 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-22 13:29:33 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=2 tools=True
+2026-03-22 13:29:33 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-22 13:29:33 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-22 13:29:33 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-22 13:29:33 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-22 13:29:33 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-22 13:29:34 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1164'), (b'Content-Type', b'application/json'), (b'Date', b'Sun, 22 Mar 2026 10:29:34 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'296'), (b'X-Request-Id', b'c84bdb13-1b88-4405-b479-7c780b871da5'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-22 13:29:34 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-22 13:29:34 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-22 13:29:34 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-22 13:29:34 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-22 13:29:34 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-22 13:29:34 | INFO | browser_agent.tools | TOOL navigate_to_url args={'url': 'https://yandex.ru'}
+2026-03-22 13:29:34 | INFO | browser_agent.browser | Navigating to https://yandex.ru
+2026-03-22 13:29:37 | INFO | browser_agent.tools | TOOL navigate_to_url result={"ok":true,"url":"https://dzen.ru/?yredirect=true","title":"Дзен — главная новостная информационная платформа, которая помогает миллионам людей узнавать, что происходит в мире."}
+2026-03-22 13:29:37 | INFO | browser_agent.tools | TOOL get_current_page_snapshot args={}
+2026-03-22 13:29:37 | INFO | browser_agent.tools | TOOL get_current_page_snapshot result={"url":"https://dzen.ru/?yredirect=true","title":"Дзен — главная новостная информационная платформа, которая помогает миллионам людей узнавать, что происходит в мире.","viewport":{"w":1280,"h":800},"interactive":[{"tag":"a","role":null,"type":null,"name":null,"id":null,"href":"https://ya.ru/?open_keyboard=1","text":"Открыть виртуальную клавиатуру","aria_label":"Открыть виртуальную клавиатуру","pl…
+2026-03-22 13:29:37 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=4 tools=True
+2026-03-22 13:29:37 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-22 13:29:37 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-22 13:29:37 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-22 13:29:37 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-22 13:29:37 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-22 13:29:38 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1048'), (b'Content-Type', b'application/json'), (b'Date', b'Sun, 22 Mar 2026 10:29:38 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'295'), (b'X-Request-Id', b'65968bcf-4b14-44d5-975c-04de4dbd9a1d'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-22 13:29:38 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-22 13:29:38 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-22 13:29:38 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-22 13:29:38 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-22 13:29:38 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-22 13:29:39 | INFO | browser_agent.tools | TOOL get_current_page_snapshot args={}
+2026-03-22 13:29:39 | INFO | browser_agent.tools | TOOL get_current_page_snapshot result={"url":"https://dzen.ru/?yredirect=true","title":"Дзен — главная новостная информационная платформа, которая помогает миллионам людей узнавать, что происходит в мире.","viewport":{"w":1280,"h":800},"interactive":[{"tag":"a","role":null,"type":null,"name":null,"id":null,"href":"https://ya.ru/?open_keyboard=1","text":"Открыть виртуальную клавиатуру","aria_label":"Открыть виртуальную клавиатуру","pl…
+2026-03-22 13:29:39 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=6 tools=True
+2026-03-22 13:29:39 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-22 13:29:39 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-22 13:29:39 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-22 13:29:39 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-22 13:29:39 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-22 13:29:41 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1144'), (b'Content-Type', b'application/json'), (b'Date', b'Sun, 22 Mar 2026 10:29:41 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'294'), (b'X-Request-Id', b'2a423cf0-8e0f-49ab-8530-bc982f1c6715'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-22 13:29:41 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-22 13:29:41 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-22 13:29:41 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-22 13:29:41 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-22 13:29:41 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-22 13:29:42 | INFO | browser_agent.tools | TOOL type_text_to_field args={'description': 'Поиск Яндекса', 'text': 'Яндекс Лавка\n', 'press_enter': True}
+2026-03-22 13:29:50 | INFO | browser_agent.browser | New page opened: https://market.yandex.ru/?clid=505&src_pof=505&utm_source=main_stripe_big&utm_source_service=morda&wprid=1774175375718818-4346012670285371176-rtc-balancer-suggest-dzen-ru-vla-46-BAL
+2026-03-22 13:29:50 | INFO | browser_agent.browser | Popup opened: https://market.yandex.ru/?clid=505&src_pof=505&utm_source=main_stripe_big&utm_source_service=morda&wprid=1774175375718818-4346012670285371176-rtc-balancer-suggest-dzen-ru-vla-46-BAL
+2026-03-22 13:29:56 | INFO | browser_agent.tools | TOOL type_text_to_field result={"ok":false,"error":"timeout via text-near/Поиск|Яндекса: Locator.scroll_into_view_if_needed: Timeout 1467ms exceeded.\nCall log:\nattempting scroll into view action\n  -   waiting for element to be stable\n","url":"https://dzen.ru/?yredirect=true"}
+2026-03-22 13:29:56 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=9 tools=True
+2026-03-22 13:29:56 | DEBUG | httpcore.connection | close.started
+2026-03-22 13:29:56 | DEBUG | httpcore.connection | close.complete
+2026-03-22 13:29:56 | DEBUG | httpcore.connection | connect_tcp.started host='ru-2.gateway.nekocode.app' port=443 local_address=None timeout=5.0 socket_options=None
+2026-03-22 13:29:56 | DEBUG | httpcore.connection | connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x727297f869c0>
+2026-03-22 13:29:56 | DEBUG | httpcore.connection | start_tls.started ssl_context=<ssl.SSLContext object at 0x727298b1a4d0> server_hostname='ru-2.gateway.nekocode.app' timeout=5.0
+2026-03-22 13:29:56 | DEBUG | httpcore.connection | start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x727297f868d0>
+2026-03-22 13:29:56 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-22 13:29:56 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-22 13:29:56 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-22 13:29:56 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-22 13:29:56 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-22 13:29:57 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1264'), (b'Content-Type', b'application/json'), (b'Date', b'Sun, 22 Mar 2026 10:29:57 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'293'), (b'X-Request-Id', b'76420326-873f-43d9-88e4-a235ae5a66a5'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-22 13:29:57 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-22 13:29:57 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-22 13:29:57 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-22 13:29:57 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-22 13:29:57 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-22 13:29:58 | INFO | browser_agent.tools | TOOL type_text_to_field args={'description': 'Найти', 'text': 'Яндекс Лавка', 'press_enter': True}
+2026-03-22 13:29:59 | INFO | browser_agent.tools | TOOL type_text_to_field result={"ok":true,"typed_via":"placeholder/Найти","pressed_enter":true,"url":"https://market.yandex.ru/?clid=505&src_pof=505&utm_source=main_stripe_big&utm_source_service=morda&wprid=1774175375718818-4346012670285371176-rtc-balancer-suggest-dzen-ru-vla-46-BAL"}
+2026-03-22 13:29:59 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=11 tools=True
+2026-03-22 13:29:59 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-22 13:29:59 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-22 13:29:59 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-22 13:29:59 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-22 13:29:59 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-22 13:30:01 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1048'), (b'Content-Type', b'application/json'), (b'Date', b'Sun, 22 Mar 2026 10:30:01 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'292'), (b'X-Request-Id', b'835781b2-bb25-4e3c-a41a-f65f85f90e4b'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-22 13:30:01 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-22 13:30:01 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-22 13:30:01 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-22 13:30:01 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-22 13:30:01 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-22 13:30:01 | INFO | browser_agent.tools | TOOL get_current_page_snapshot args={}
+2026-03-22 13:30:01 | INFO | browser_agent.tools | TOOL get_current_page_snapshot result={"url":"https://market.yandex.ru/search?suggest_text=%D0%AF%D0%BD%D0%B4%D0%B5%D0%BA%D1%81%20%D0%9B%D0%B0%D0%B2%D0%BA%D0%B0&nid=54415&rs=eJwzYv_EyMLBKMEAAAkOAVI%2C&rt=10","title":"Яндекс Лавка — купить по низкой цене на Яндекс Маркете","viewport":{"w":1280,"h":800},"interactive":[{"tag":"a","role":null,"type":null,"name":null,"id":null,"href":"https://market.yandex.ru/kolesoprizov?fromSins=1&erid=…
+2026-03-22 13:30:01 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=13 tools=True
+2026-03-22 13:30:01 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-22 13:30:01 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-22 13:30:01 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-22 13:30:01 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-22 13:30:01 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-22 13:30:03 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1436'), (b'Content-Type', b'application/json'), (b'Date', b'Sun, 22 Mar 2026 10:30:03 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'291'), (b'X-Request-Id', b'8efc75e9-8c08-4298-9ef5-23965ec61633'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-22 13:30:03 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-22 13:30:03 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-22 13:30:03 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-22 13:30:03 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-22 13:30:03 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-22 13:30:03 | INFO | browser_agent.tools | TOOL find_element_and_click args={'description': 'Череповец • Укажите адрес'}
+2026-03-22 13:30:03 | INFO | browser_agent.tools | TOOL find_element_and_click result={"ok":true,"clicked_via":"role=button/Череповец\\ •\\ Укажите\\ адрес","url":"https://market.yandex.ru/search?suggest_text=%D0%AF%D0%BD%D0%B4%D0%B5%D0%BA%D1%81%20%D0%9B%D0%B0%D0%B2%D0%BA%D0%B0&nid=54415&rs=eJwzYv_EyMLBKMEAAAkOAVI%2C&rt=10","title":"Яндекс Лавка — купить по низкой цене на Яндекс Маркете"}
+2026-03-22 13:30:03 | INFO | browser_agent.tools | TOOL get_current_page_snapshot args={}
+2026-03-22 13:30:03 | INFO | browser_agent.tools | TOOL get_current_page_snapshot result={"url":"https://market.yandex.ru/search?suggest_text=%D0%AF%D0%BD%D0%B4%D0%B5%D0%BA%D1%81%20%D0%9B%D0%B0%D0%B2%D0%BA%D0%B0&nid=54415&rs=eJwzYv_EyMLBKMEAAAkOAVI%2C&rt=10","title":"Яндекс Лавка — купить по низкой цене на Яндекс Маркете","viewport":{"w":1280,"h":800},"interactive":[{"tag":"a","role":null,"type":null,"name":null,"id":null,"href":"https://market.yandex.ru/kolesoprizov?fromSins=1&erid=…
+2026-03-22 13:30:04 | INFO | browser_agent.tools | TOOL type_text_to_field args={'description': 'Найти товары', 'text': 'хот-дог', 'press_enter': True}
+2026-03-22 13:30:05 | INFO | browser_agent.tools | TOOL type_text_to_field result={"ok":true,"typed_via":"placeholder/Найти\\ товары","pressed_enter":true,"url":"https://market.yandex.ru/search?suggest_text=%D0%AF%D0%BD%D0%B4%D0%B5%D0%BA%D1%81%20%D0%9B%D0%B0%D0%B2%D0%BA%D0%B0&nid=54415&rs=eJwzYv_EyMLBKMEAAAkOAVI%2C&rt=10"}
+2026-03-22 13:30:05 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=16 tools=True
+2026-03-22 13:30:05 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-22 13:30:05 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-22 13:30:05 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-22 13:30:05 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-22 13:30:05 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-22 13:30:07 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1047'), (b'Content-Type', b'application/json'), (b'Date', b'Sun, 22 Mar 2026 10:30:07 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'290'), (b'X-Request-Id', b'6a579745-d059-4191-9ded-47a1b490aa4d'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-22 13:30:07 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-22 13:30:07 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-22 13:30:07 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-22 13:30:07 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-22 13:30:07 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-22 13:30:07 | INFO | browser_agent.tools | TOOL get_current_page_snapshot args={}
+2026-03-22 13:30:07 | INFO | browser_agent.tools | TOOL get_current_page_snapshot result={"url":"https://market.yandex.ru/search?text=%D1%85%D0%BE%D1%82-%D0%B4%D0%BE%D0%B3&hid=1564517&hid=10682610&hid=90591&hid=5017483&hid=10683227&rs=eJwzCq5i4Xi6L_4TozEHg8DCQ6wSDApArsKnxh5WhfuHWRW6529iUrjd1sOqsXPrB1YNkLgGSEwDJPaXUbJwp10vk-8-RvupTCLTv9qtYALqBgCKNCI6&rt=9","title":"Хот-дог — купить по низкой цене на Яндекс Маркете","viewport":{"w":1280,"h":800},"interactive":[{"tag":"a","role":null,"t…
+2026-03-22 13:30:07 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=2 tools=False
+2026-03-22 13:30:07 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-22 13:30:07 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-22 13:30:07 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-22 13:30:07 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-22 13:30:07 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-22 13:30:09 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1378'), (b'Content-Type', b'application/json'), (b'Date', b'Sun, 22 Mar 2026 10:30:09 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'289'), (b'X-Request-Id', b'376cd727-0c80-4052-852e-abde9b0fcc10'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-22 13:30:09 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-22 13:30:09 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-22 13:30:09 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-22 13:30:09 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-22 13:30:09 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-22 13:30:09 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=2 tools=False
+2026-03-22 13:30:09 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-22 13:30:09 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-22 13:30:09 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-22 13:30:09 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-22 13:30:09 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-22 13:30:11 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1080'), (b'Content-Type', b'application/json'), (b'Date', b'Sun, 22 Mar 2026 10:30:11 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'288'), (b'X-Request-Id', b'2ddb772c-6e72-4f11-9a99-ee2f014add95'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-22 13:30:11 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-22 13:30:11 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-22 13:30:11 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-22 13:30:11 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-22 13:30:11 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-22 13:30:11 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=2 tools=True
+2026-03-22 13:30:11 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-22 13:30:11 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-22 13:30:11 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-22 13:30:11 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-22 13:30:11 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-22 13:30:14 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1224'), (b'Content-Type', b'application/json'), (b'Date', b'Sun, 22 Mar 2026 10:30:14 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'287'), (b'X-Request-Id', b'0131d928-eadf-4e2f-917b-a2500f2f9d54'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-22 13:30:14 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-22 13:30:14 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-22 13:30:14 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-22 13:30:14 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-22 13:30:14 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-22 13:30:14 | INFO | browser_agent.tools | TOOL navigate_to_url args={'url': 'https://lavka.yandex.ru'}
+2026-03-22 13:30:14 | INFO | browser_agent.browser | Navigating to https://lavka.yandex.ru
+2026-03-22 13:30:15 | INFO | browser_agent.tools | TOOL navigate_to_url result={"ok":true,"url":"https://lavka.yandex.ru/","title":"Купить продукты с доставкой на дом из Яндекс Лавки"}
+2026-03-22 13:30:15 | INFO | browser_agent.tools | TOOL get_current_page_snapshot args={}
+2026-03-22 13:30:15 | INFO | browser_agent.tools | TOOL get_current_page_snapshot result={"url":"https://lavka.yandex.ru/","title":"Купить продукты с доставкой на дом из Яндекс Лавки","viewport":{"w":1600,"h":1000},"interactive":[{"tag":"button","role":null,"type":null,"name":null,"id":null,"href":null,"text":"Ещё больше скидок и новых функций — в приложении Лавки Перейти","aria_label":null,"placeholder":null,"disabled":false,"bbox":{"x":0,"y":0,"w":1582,"h":64}},{"tag":"input","role…
+2026-03-22 13:30:15 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=4 tools=True
+2026-03-22 13:30:15 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-22 13:30:15 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-22 13:30:15 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-22 13:30:15 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-22 13:30:15 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-22 13:30:17 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1047'), (b'Content-Type', b'application/json'), (b'Date', b'Sun, 22 Mar 2026 10:30:17 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'286'), (b'X-Request-Id', b'aa007eb8-6b9a-4d12-b2a4-2ecf18cc6197'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-22 13:30:17 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-22 13:30:17 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-22 13:30:17 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-22 13:30:17 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-22 13:30:17 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-22 13:30:17 | INFO | browser_agent.tools | TOOL get_current_page_snapshot args={}
+2026-03-22 13:30:17 | INFO | browser_agent.tools | TOOL get_current_page_snapshot result={"url":"https://lavka.yandex.ru/","title":"Купить продукты с доставкой на дом из Яндекс Лавки","viewport":{"w":1600,"h":1000},"interactive":[{"tag":"button","role":null,"type":null,"name":null,"id":null,"href":null,"text":"Ещё больше скидок и новых функций — в приложении Лавки Перейти","aria_label":null,"placeholder":null,"disabled":false,"bbox":{"x":0,"y":0,"w":1582,"h":64}},{"tag":"input","role…
+2026-03-22 13:30:18 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=6 tools=True
+2026-03-22 13:30:18 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-22 13:30:18 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-22 13:30:18 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-22 13:30:18 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-22 13:30:18 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-22 13:30:20 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1136'), (b'Content-Type', b'application/json'), (b'Date', b'Sun, 22 Mar 2026 10:30:20 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'285'), (b'X-Request-Id', b'f1e542d8-487a-4ae9-82a4-5ff8e8813c0f'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-22 13:30:20 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-22 13:30:20 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-22 13:30:20 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-22 13:30:20 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-22 13:30:20 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-22 13:30:20 | INFO | browser_agent.tools | TOOL type_text_to_field args={'description': 'Найти в Лавке', 'text': 'хот-дог', 'press_enter': True}
+2026-03-22 13:30:21 | INFO | browser_agent.tools | TOOL type_text_to_field result={"ok":true,"typed_via":"placeholder/Найти\\ в\\ Лавке","pressed_enter":true,"url":"https://lavka.yandex.ru/"}
+2026-03-22 13:30:22 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=8 tools=True
+2026-03-22 13:30:22 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-22 13:30:22 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-22 13:30:22 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-22 13:30:22 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-22 13:30:22 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-22 13:30:23 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1047'), (b'Content-Type', b'application/json'), (b'Date', b'Sun, 22 Mar 2026 10:30:23 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'284'), (b'X-Request-Id', b'ce4b9e3e-d05e-432e-9780-fbedb7a05c3d'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-22 13:30:23 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-22 13:30:23 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-22 13:30:23 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-22 13:30:23 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-22 13:30:23 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-22 13:30:23 | INFO | browser_agent.tools | TOOL get_current_page_snapshot args={}
+2026-03-22 13:30:23 | INFO | browser_agent.tools | TOOL get_current_page_snapshot result={"url":"https://lavka.yandex.ru/search?text=%D1%85%D0%BE%D1%82-%D0%B4%D0%BE%D0%B3","title":"Результаты по запросу «%D1%85%D0%BE%D1%82-%D0%B4%D0%BE%D0%B3»","viewport":{"w":1600,"h":1000},"interactive":[{"tag":"button","role":null,"type":null,"name":null,"id":null,"href":null,"text":"Ещё больше скидок и новых функций — в приложении Лавки Перейти","aria_label":null,"placeholder":null,"disabled":fals…
+2026-03-22 13:30:24 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=10 tools=True
+2026-03-22 13:30:24 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-22 13:30:24 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-22 13:30:24 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-22 13:30:24 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-22 13:30:24 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-22 13:30:26 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1395'), (b'Content-Type', b'application/json'), (b'Date', b'Sun, 22 Mar 2026 10:30:26 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'283'), (b'X-Request-Id', b'de1d437d-d59a-46c1-a4b5-1a030580d937'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-22 13:30:26 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-22 13:30:26 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-22 13:30:26 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-22 13:30:26 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-22 13:30:26 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-22 13:30:27 | INFO | browser_agent.tools | TOOL find_element_and_click args={'description': 'Хот\xadсте\xadры Горя\xadчая штуч\xadка 250 г'}
+2026-03-22 13:30:48 | INFO | browser_agent.tools | TOOL find_element_and_click result={"ok":false,"error":"timeout via label/Хот|сте|Горя|чая|штуч|250: Locator.scroll_into_view_if_needed: Timeout 1500ms exceeded.\nCall log:\nwaiting for get_by_label(re.compile(r\"Хот|сте|Горя|чая|штуч|250\", re.IGNORECASE)).first\n","url":"https://lavka.yandex.ru/search?text=%D1%85%D0%BE%D1%82-%D0%B4%D0%BE%D0%B3"}
+2026-03-22 13:30:48 | INFO | browser_agent.tools | TOOL find_element_and_click args={'description': 'Увеличить'}
+2026-03-22 13:30:48 | INFO | browser_agent.tools | TOOL find_element_and_click result={"ok":true,"clicked_via":"role=button/Увеличить","url":"https://lavka.yandex.ru/search?text=%D1%85%D0%BE%D1%82-%D0%B4%D0%BE%D0%B3","title":"Результаты по запросу «%D1%85%D0%BE%D1%82-%D0%B4%D0%BE%D0%B3»"}
+2026-03-22 13:30:48 | INFO | browser_agent.tools | TOOL get_current_page_snapshot args={}
+2026-03-22 13:30:48 | INFO | browser_agent.tools | TOOL get_current_page_snapshot result={"url":"https://lavka.yandex.ru/search?text=%D1%85%D0%BE%D1%82-%D0%B4%D0%BE%D0%B3","title":"Результаты по запросу «%D1%85%D0%BE%D1%82-%D0%B4%D0%BE%D0%B3»","viewport":{"w":1600,"h":1000},"interactive":[{"tag":"button","role":null,"type":null,"name":null,"id":null,"href":null,"text":"Ещё больше скидок и новых функций — в приложении Лавки Перейти","aria_label":null,"placeholder":null,"disabled":fals…
+2026-03-22 13:30:49 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=14 tools=True
+2026-03-22 13:30:49 | DEBUG | httpcore.connection | close.started
+2026-03-22 13:30:49 | DEBUG | httpcore.connection | close.complete
+2026-03-22 13:30:49 | DEBUG | httpcore.connection | connect_tcp.started host='ru-2.gateway.nekocode.app' port=443 local_address=None timeout=5.0 socket_options=None
+2026-03-22 13:30:49 | DEBUG | httpcore.connection | connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x727297e9b200>
+2026-03-22 13:30:49 | DEBUG | httpcore.connection | start_tls.started ssl_context=<ssl.SSLContext object at 0x727298b1a4d0> server_hostname='ru-2.gateway.nekocode.app' timeout=5.0
+2026-03-22 13:30:49 | DEBUG | httpcore.connection | start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x727297e9a870>
+2026-03-22 13:30:49 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-22 13:30:49 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-22 13:30:49 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-22 13:30:49 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-22 13:30:49 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-22 13:30:49 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 400, b'Bad Request', [(b'Content-Length', b'285'), (b'Content-Type', b'application/json'), (b'Date', b'Sun, 22 Mar 2026 10:30:49 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'288'), (b'X-Request-Id', b'77392dd5-b157-498b-bc95-0a5e2fe8a9b2'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-22 13:30:49 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 400 Bad Request"
+2026-03-22 13:30:49 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-22 13:30:49 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-22 13:30:49 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-22 13:30:49 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-22 13:30:50 | INFO | browser_agent.cli | Closing browser...
+2026-03-22 13:30:50 | DEBUG | httpcore.connection | close.started
+2026-03-22 13:30:50 | DEBUG | httpcore.connection | close.complete
