@@ -5,6 +5,7 @@ import os
 import sys
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Iterable
 
 
 ANSI_RESET = "\x1b[0m"
@@ -31,7 +32,20 @@ class GrayFormatter(logging.Formatter):
 @dataclass(frozen=True)
 class LoggingConfig:
     verbose: bool
+    # If set, write structured logs into separate files inside this directory.
+    log_dir: Path | None = None
+    # Back-compat: single log file mode (if set, overrides log_dir).
     log_file: Path | None = None
+
+
+class NamePrefixFilter(logging.Filter):
+    def __init__(self, prefixes: Iterable[str]):
+        super().__init__()
+        self._prefixes = tuple(prefixes)
+
+    def filter(self, record: logging.LogRecord) -> bool:
+        name = record.name
+        return any(name == p or name.startswith(p + ".") for p in self._prefixes)
 
 
 def setup_logging(cfg: LoggingConfig) -> None:
@@ -52,6 +66,7 @@ def setup_logging(cfg: LoggingConfig) -> None:
     )
     root.addHandler(console)
 
+    # File logging
     if cfg.log_file is not None:
         cfg.log_file.parent.mkdir(parents=True, exist_ok=True)
         fh = logging.FileHandler(cfg.log_file, encoding="utf-8")
@@ -63,6 +78,43 @@ def setup_logging(cfg: LoggingConfig) -> None:
             )
         )
         root.addHandler(fh)
+    elif cfg.log_dir is not None:
+        cfg.log_dir.mkdir(parents=True, exist_ok=True)
+
+        fmt = logging.Formatter(
+            fmt="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
+            datefmt="%Y-%m-%d %H:%M:%S",
+        )
+
+        # 1) Requests (HTTP + OpenAI client request metadata)
+        requests_fh = logging.FileHandler(cfg.log_dir / "requests.log", encoding="utf-8")
+        requests_fh.setLevel(logging.DEBUG)
+        requests_fh.setFormatter(fmt)
+        requests_fh.addFilter(NamePrefixFilter(["httpx", "httpcore", "openai", "browser_agent.openai"]))
+        root.addHandler(requests_fh)
+
+        # 2) Agent reasoning / tool execution traces (what it tried and why)
+        agent_fh = logging.FileHandler(cfg.log_dir / "agent.log", encoding="utf-8")
+        agent_fh.setLevel(logging.DEBUG)
+        agent_fh.setFormatter(fmt)
+        agent_fh.addFilter(
+            NamePrefixFilter(
+                [
+                    "browser_agent.agent",
+                    "browser_agent.subagents",
+                    "browser_agent.tools",
+                    "browser_agent.browser",
+                ]
+            )
+        )
+        root.addHandler(agent_fh)
+
+        # 3) Chat transcript
+        chat_fh = logging.FileHandler(cfg.log_dir / "chat.log", encoding="utf-8")
+        chat_fh.setLevel(logging.INFO)
+        chat_fh.setFormatter(fmt)
+        chat_fh.addFilter(NamePrefixFilter(["browser_agent.chat"]))
+        root.addHandler(chat_fh)
 
     # Make sure request logs are captured (URL, status code).
     logging.getLogger("httpx").setLevel(logging.INFO)

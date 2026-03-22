@@ -33,13 +33,56 @@ class BrowserEngine:
         self._cfg = cfg
         self._pw = None
         self._context: BrowserContext | None = None
-        self._page: Page | None = None
+        self._pages: list[Page] = []
+        self._active_index: int = 0
 
     @property
     def page(self) -> Page:
-        if self._page is None:
+        if not self._pages:
             raise RuntimeError("Browser page is not initialized yet")
-        return self._page
+        # Clamp active index
+        if self._active_index < 0 or self._active_index >= len(self._pages):
+            self._active_index = 0
+        return self._pages[self._active_index]
+
+    def list_tabs(self) -> list[dict[str, Any]]:
+        tabs: list[dict[str, Any]] = []
+        for i, p in enumerate(self._pages):
+            try:
+                url = p.url
+            except Exception:
+                url = ""
+            try:
+                title = p.title()
+            except Exception:
+                title = ""
+            tabs.append({"index": i, "active": i == self._active_index, "url": url, "title": title})
+        return tabs
+
+    def switch_to_tab(self, index: int) -> dict[str, Any]:
+        if index < 0 or index >= len(self._pages):
+            return {"ok": False, "error": f"tab index out of range: {index}", "tabs": self.list_tabs()}
+        self._active_index = index
+        try:
+            self.page.bring_to_front()
+        except Exception:
+            pass
+        return {"ok": True, "active_index": self._active_index, "tabs": self.list_tabs()}
+
+    def open_new_tab(self, url: str | None = None) -> dict[str, Any]:
+        if self._context is None:
+            raise RuntimeError("Browser context is not initialized")
+        p = self._context.new_page()
+        self._wire_page(p)
+        self._pages.append(p)
+        self._active_index = len(self._pages) - 1
+        try:
+            p.bring_to_front()
+        except Exception:
+            pass
+        if url:
+            self.navigate_to_url(url)
+        return {"ok": True, "active_index": self._active_index, "tabs": self.list_tabs()}
 
     def start(self) -> None:
         self._cfg.profile_dir.mkdir(parents=True, exist_ok=True)
@@ -72,8 +115,15 @@ class BrowserEngine:
         self._context.on("page", self._on_new_page)
 
         pages = self._context.pages
-        self._page = pages[0] if pages else self._context.new_page()
-        self._wire_page(self._page)
+        if pages:
+            for p in pages:
+                self._wire_page(p)
+            self._pages = list(pages)
+        else:
+            p = self._context.new_page()
+            self._wire_page(p)
+            self._pages = [p]
+        self._active_index = 0
 
     def close(self) -> None:
         try:
@@ -81,7 +131,8 @@ class BrowserEngine:
                 self._context.close()
         finally:
             self._context = None
-            self._page = None
+            self._pages = []
+            self._active_index = 0
             if self._pw is not None:
                 self._pw.stop()
                 self._pw = None
@@ -90,16 +141,31 @@ class BrowserEngine:
         page.set_default_timeout(10_000)
         page.on("dialog", lambda d: d.dismiss())
         page.on("popup", self._on_popup)
+        page.on("close", lambda: self._on_page_closed(page))
+
+    def _on_page_closed(self, page: Page) -> None:
+        try:
+            idx = self._pages.index(page)
+        except ValueError:
+            return
+        self._pages.pop(idx)
+        if self._active_index >= len(self._pages):
+            self._active_index = max(0, len(self._pages) - 1)
 
     def _on_new_page(self, page: Page) -> None:
         log.info("New page opened: %s", page.url)
         self._wire_page(page)
-        self._page = page
+        # Keep a stable active tab unless user/model explicitly switches.
+        if page not in self._pages:
+            self._pages.append(page)
 
     def _on_popup(self, page: Page) -> None:
         log.info("Popup opened: %s", page.url)
         self._wire_page(page)
-        self._page = page
+        if page not in self._pages:
+            self._pages.append(page)
+        # Popups are usually the user's focus.
+        self._active_index = len(self._pages) - 1
 
     # ---- Tools ----
 
@@ -233,6 +299,8 @@ class BrowserEngine:
 """
 
         snapshot = page.evaluate(js)
+        snapshot["tabs"] = self.list_tabs()
+        snapshot["active_tab_index"] = self._active_index
         interactive = snapshot.get("interactive", [])
         # Truncate interactive list deterministically: closest to top-left first.
         interactive.sort(key=lambda it: (it.get("bbox", {}).get("y", 0), it.get("bbox", {}).get("x", 0)))

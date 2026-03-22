@@ -18,6 +18,37 @@ def tool_schemas() -> list[dict[str, Any]]:
         {
             "type": "function",
             "function": {
+                "name": "list_tabs",
+                "description": "List open browser tabs with their index, url, and title.",
+                "parameters": {"type": "object", "properties": {}},
+            },
+        },
+        {
+            "type": "function",
+            "function": {
+                "name": "switch_to_tab",
+                "description": "Switch active tab by index.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {"index": {"type": "integer"}},
+                    "required": ["index"],
+                },
+            },
+        },
+        {
+            "type": "function",
+            "function": {
+                "name": "open_new_tab",
+                "description": "Open a new tab and optionally navigate to a URL.",
+                "parameters": {
+                    "type": "object",
+                    "properties": {"url": {"type": "string"}},
+                },
+            },
+        },
+        {
+            "type": "function",
+            "function": {
                 "name": "navigate_to_url",
                 "description": "Navigate the current tab to a URL.",
                 "parameters": {
@@ -131,6 +162,20 @@ def _navigate(ctx: ToolContext, args: dict[str, Any]) -> dict[str, Any]:
     return ctx.engine.navigate_to_url(url=str(args["url"]))
 
 
+def _list_tabs(ctx: ToolContext, args: dict[str, Any]) -> dict[str, Any]:
+    _ = args
+    return {"ok": True, "tabs": ctx.engine.list_tabs()}
+
+
+def _switch_tab(ctx: ToolContext, args: dict[str, Any]) -> dict[str, Any]:
+    return ctx.engine.switch_to_tab(index=int(args["index"]))
+
+
+def _open_tab(ctx: ToolContext, args: dict[str, Any]) -> dict[str, Any]:
+    url = args.get("url")
+    return ctx.engine.open_new_tab(url=(None if url is None else str(url)))
+
+
 def _snapshot(ctx: ToolContext, args: dict[str, Any]) -> dict[str, Any]:
     _ = args
     return ctx.engine.get_current_page_snapshot(cfg=ctx.snapshot_cfg)
@@ -166,6 +211,9 @@ def _confirm(ctx: ToolContext, args: dict[str, Any]) -> dict[str, Any]:
 
 
 _TOOL_IMPL: dict[str, ToolFn] = {
+    "list_tabs": _list_tabs,
+    "switch_to_tab": _switch_tab,
+    "open_new_tab": _open_tab,
     "navigate_to_url": _navigate,
     "get_current_page_snapshot": _snapshot,
     "find_element_and_click": _click,
@@ -199,6 +247,12 @@ def dispatch_tool(ctx: ToolContext, *, name: str, arguments_json: str) -> dict[s
 
 
 def _status_hint(*, name: str, args: dict[str, Any]) -> str:
+    if name == "list_tabs":
+        return "Смотрю список вкладок"
+    elif name == "switch_to_tab":
+        return f"Переключаюсь на вкладку {args.get('index')}"
+    elif name == "open_new_tab":
+        return f"Открываю новую вкладку {_short_human(args.get('url'), 40)}"
     if name == "navigate_to_url":
         return f"Открываю {_short_human(args.get('url'), 50)}"
     elif name == "get_current_page_snapshot":

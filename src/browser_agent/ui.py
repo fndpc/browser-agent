@@ -7,6 +7,7 @@ import time
 import shutil
 from contextlib import contextmanager
 from dataclasses import dataclass
+import logging
 
 
 def _isatty() -> bool:
@@ -35,6 +36,7 @@ class UIConfig:
 class UI:
     def __init__(self, cfg: UIConfig | None = None):
         self._cfg = cfg or UIConfig()
+        self._chat_log = logging.getLogger("browser_agent.chat")
 
     def _wrap(self, s: str, code: str) -> str:
         if not self._cfg.color or not _supports_color():
@@ -44,6 +46,7 @@ class UI:
     def meta(self, s: str) -> None:
         """Anything that's not the final answer (logs, tool calls, status)."""
         print(self._wrap(s, ANSI_GRAY))
+        self._chat_log.info("META %s", s)
 
     def status(self, s: str) -> None:
         self.meta(s)
@@ -51,13 +54,18 @@ class UI:
     def assistant(self, s: str) -> None:
         """Assistant messages / 'thoughts' shown to the user."""
         print(self._wrap(s, ANSI_BRIGHT))
+        self._chat_log.info("ASSISTANT %s", s)
 
     def result(self, s: str) -> None:
         """Final answer / result for the user."""
         print(self._wrap(s, ANSI_BRIGHT))
+        self._chat_log.info("RESULT %s", s.strip())
 
     def ask(self, prompt: str) -> str:
-        return input(self._wrap(prompt, ANSI_GRAY))
+        self._chat_log.info("PROMPT %s", prompt.replace("\n", "\\n"))
+        ans = input(self._wrap(prompt, ANSI_GRAY))
+        self._chat_log.info("USER %s", ans)
+        return ans
 
     def confirm(self, action: str) -> bool:
         ans = self.ask(

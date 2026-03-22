@@ -47,18 +47,29 @@ def _parse_args(argv: list[str] | None) -> argparse.Namespace:
         default=None,
         help="Write debug logs to this file (default: logs/run-<timestamp>.log)",
     )
+    p.add_argument(
+        "--log-dir",
+        type=Path,
+        default=Path("logs"),
+        help='Base directory for session log folders (default: "logs/")',
+    )
     return p.parse_args(argv)
 
 
 def main(argv: list[str] | None = None) -> int:
     args = _parse_args(argv)
     log_file = args.log_file
+    log_dir = None
     if log_file is None:
-        ts = _dt.datetime.now().strftime("%Y%m%d-%H%M%S")
-        log_file = Path("logs") / f"run-{ts}.log"
-    setup_logging(LoggingConfig(verbose=bool(args.verbose), log_file=log_file))
+        # Default: per-session folder logs: "dd.mm.yyyy - HH:MM:SS"
+        session_name = _dt.datetime.now().astimezone().strftime("%d.%m.%Y - %H:%M:%S")
+        log_dir = Path(args.log_dir) / session_name
+    setup_logging(LoggingConfig(verbose=bool(args.verbose), log_dir=log_dir, log_file=log_file))
     ui = UI(UIConfig(color=not bool(args.no_color)))
-    ui.status(f"Логи пишутся в файл: {log_file}")
+    if log_file is not None:
+        ui.status(f"Логи пишутся в файл: {log_file}")
+    else:
+        ui.status(f"Логи пишутся в папку: {log_dir}")
 
     cfg = load_openai_config(model_override=args.model)
     chat = OpenAIChat(cfg)

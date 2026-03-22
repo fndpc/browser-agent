@@ -147,6 +147,9 @@ class BrowserAgent:
                     "describing what you are about to do. "
                     "When calling tools that take `description`, use a SHORT UI phrase (button text, link text, placeholder, aria-label), "
                     "not a full explanation."
+                    "Tabs: keep tasks on separate tabs when requested. "
+                    "Use open_new_tab(url) to open a new tab and switch_to_tab(index) to return. "
+                    "Do NOT navigate an existing tab to a different site unless explicitly asked; prefer opening a new tab."
                     "Only call confirm_destructive_action for truly destructive/irreversible actions "
                     "(payments, deleting data, sending messages/forms). "
                     "Typing a search query and running a search is NOT destructive. "
@@ -190,6 +193,7 @@ class BrowserAgent:
                 # Execute tools and ALWAYS append a tool message for every tool_call_id.
                 expected_ids = [d["id"] for d in tc_dicts]
                 responded_ids: set[str] = set()
+                post_tool_user_messages: list[str] = []
 
                 for tc, tc_id in tc_pairs:
                     name = tc.function.name
@@ -226,25 +230,15 @@ class BrowserAgent:
                     if isinstance(out, dict) and out.get("ok") is False:
                         err_txt = str(out.get("error") or "")
                         if "not enabled" in err_txt or "is not enabled" in err_txt:
-                            messages.append(
-                                {
-                                    "role": "user",
-                                    "content": (
-                                        "The target element appears DISABLED (not enabled). "
-                                        "This often means a prerequisite isn't satisfied (e.g. choose delivery address/region, "
-                                        "close a modal/consent banner, or pick a store). "
-                                        "Ask the user to complete the prerequisite in the visible browser if needed, then continue."
-                                    ),
-                                }
+                            post_tool_user_messages.append(
+                                "The target element appears DISABLED (not enabled). "
+                                "This often means a prerequisite isn't satisfied (e.g. choose delivery address/region, "
+                                "close a modal/consent banner, or pick a store). "
+                                "Ask the user to complete the prerequisite in the visible browser if needed, then continue."
                             )
-                        messages.append(
-                            {
-                                "role": "user",
-                                "content": (
-                                    f"Tool {name} failed with: {out}. "
-                                    "Retry with a different description, wait, re-snapshot, or ask for clarification."
-                                ),
-                            }
+                        post_tool_user_messages.append(
+                            f"Tool {name} failed with: {out}. "
+                            "Retry with a different description, wait, re-snapshot, or ask for clarification."
                         )
 
                 # Safety net: never send a tool_call without a tool response in the next request.
@@ -263,6 +257,10 @@ class BrowserAgent:
                             ),
                         }
                     )
+
+                # Only after ALL tool_call_ids are responded to, we may append user guidance.
+                for txt in post_tool_user_messages:
+                    messages.append({"role": "user", "content": txt})
                 continue
 
             content = (msg.content or "").strip()
