@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import logging
+import time
 from dataclasses import dataclass
 from typing import Any, Callable
 
@@ -76,7 +77,13 @@ def tool_schemas() -> list[dict[str, Any]]:
                 ),
                 "parameters": {
                     "type": "object",
-                    "properties": {"description": {"type": "string"}},
+                    "properties": {
+                        "description": {"type": "string"},
+                        "allow_repeat": {
+                            "type": "boolean",
+                            "description": "Set true only if repeating the same click is intended (e.g. increment quantity).",
+                        },
+                    },
                     "required": ["description"],
                 },
             },
@@ -142,6 +149,7 @@ class ToolContext:
     snapshot_cfg: SnapshotConfig
     destructive_approval: DestructiveApproval
     ui: UI
+    recent_clicks: dict[str, float]
 
 
 ToolFn = Callable[[ToolContext, dict[str, Any]], dict[str, Any]]
@@ -183,7 +191,20 @@ def _snapshot(ctx: ToolContext, args: dict[str, Any]) -> dict[str, Any]:
 
 def _click(ctx: ToolContext, args: dict[str, Any]) -> dict[str, Any]:
     _guard(ctx, tool_name="find_element_and_click", args=args)
-    return ctx.engine.find_element_and_click(description=str(args["description"]))
+    desc = str(args["description"])
+    allow_repeat = bool(args.get("allow_repeat", False))
+    key = desc.strip().lower()
+    now = time.monotonic()
+    last = ctx.recent_clicks.get(key)
+    if (not allow_repeat) and last is not None and (now - last) < 15.0:
+        return {
+            "ok": False,
+            "error": "duplicate_click_suppressed: same click repeated too soon; set allow_repeat=true if intentional",
+        }
+    out = ctx.engine.find_element_and_click(description=desc)
+    if out.get("ok"):
+        ctx.recent_clicks[key] = now
+    return out
 
 
 def _type(ctx: ToolContext, args: dict[str, Any]) -> dict[str, Any]:

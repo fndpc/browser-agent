@@ -86,6 +86,7 @@ class BrowserAgent:
             snapshot_cfg=self._cfg.snapshot_cfg,
             destructive_approval=self._approval,
             ui=self._ui,
+            recent_clicks={},
         )
 
         # Boot snapshot into memory (logged as a tool call).
@@ -147,6 +148,8 @@ class BrowserAgent:
                     "describing what you are about to do. "
                     "When calling tools that take `description`, use a SHORT UI phrase (button text, link text, placeholder, aria-label), "
                     "not a full explanation."
+                    "If you need to click the same control multiple times (e.g. increase quantity), set allow_repeat=true "
+                    "for find_element_and_click; otherwise repeated identical clicks may be suppressed."
                     "Tabs: keep tasks on separate tabs when requested. "
                     "Use open_new_tab(url) to open a new tab and switch_to_tab(index) to return. "
                     "Do NOT navigate an existing tab to a different site unless explicitly asked; prefer opening a new tab."
