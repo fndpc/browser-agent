@@ -26,7 +26,7 @@ _RISK_PATTERNS = [
     r"\bочист",
     # Sending/publishing (narrowed: don't block "send search", etc.)
     r"\bsend\b.*\b(email|message|form|order)\b",
-    r"\bотправ(ить|лю|ка)\b.*\b(письм|сообщ|форм|заказ|данн)\b",
+    r"\bотправ(ить|лю|ка)\b.*\b(письм\w*|сообщ\w*|форм\w*|заказ\w*|данн\w*)\b",
 ]
 
 

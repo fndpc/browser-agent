@@ -1,0 +1,190 @@
+2026-03-23 17:58:49 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=2 tools=False
+2026-03-23 17:58:49 | DEBUG | httpcore.connection | connect_tcp.started host='ru-2.gateway.nekocode.app' port=443 local_address=None timeout=5.0 socket_options=None
+2026-03-23 17:58:49 | DEBUG | httpcore.connection | connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x70fbddd83e00>
+2026-03-23 17:58:49 | DEBUG | httpcore.connection | start_tls.started ssl_context=<ssl.SSLContext object at 0x70fbddf1f6d0> server_hostname='ru-2.gateway.nekocode.app' timeout=5.0
+2026-03-23 17:58:49 | DEBUG | httpcore.connection | start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x70fbddd83890>
+2026-03-23 17:58:49 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-23 17:58:49 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-23 17:58:49 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-23 17:58:49 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-23 17:58:49 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-23 17:58:52 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1938'), (b'Content-Type', b'application/json'), (b'Date', b'Mon, 23 Mar 2026 14:58:52 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'290'), (b'X-Request-Id', b'ef5ed9ad-0063-40f1-9fb2-a7f8da2f2c22'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-23 17:58:52 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-23 17:58:52 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-23 17:58:52 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-23 17:58:52 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-23 17:58:52 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-23 17:58:52 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=2 tools=False
+2026-03-23 17:58:52 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-23 17:58:52 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-23 17:58:52 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-23 17:58:52 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-23 17:58:52 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-23 17:58:54 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1277'), (b'Content-Type', b'application/json'), (b'Date', b'Mon, 23 Mar 2026 14:58:54 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'290'), (b'X-Request-Id', b'6fd2c318-b6fe-4b1d-95cd-3f90df393006'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-23 17:58:54 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-23 17:58:54 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-23 17:58:54 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-23 17:58:54 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-23 17:58:54 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-23 17:58:54 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=2 tools=False
+2026-03-23 17:58:54 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-23 17:58:54 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-23 17:58:54 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-23 17:58:54 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-23 17:58:54 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-23 17:58:56 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1007'), (b'Content-Type', b'application/json'), (b'Date', b'Mon, 23 Mar 2026 14:58:56 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'289'), (b'X-Request-Id', b'cfd772e8-f029-43a5-81a5-48a92f9985a1'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-23 17:58:56 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-23 17:58:56 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-23 17:58:56 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-23 17:58:56 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-23 17:58:56 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-23 17:58:56 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=2 tools=True
+2026-03-23 17:58:56 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-23 17:58:56 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-23 17:58:56 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-23 17:58:56 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-23 17:58:56 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-23 17:58:59 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1122'), (b'Content-Type', b'application/json'), (b'Date', b'Mon, 23 Mar 2026 14:58:58 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'289'), (b'X-Request-Id', b'd649c5c6-88d2-4dda-bbee-99b09fecad9c'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-23 17:58:59 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-23 17:58:59 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-23 17:58:59 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-23 17:58:59 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-23 17:58:59 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-23 17:59:02 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=4 tools=True
+2026-03-23 17:59:02 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-23 17:59:02 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-23 17:59:02 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-23 17:59:02 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-23 17:59:02 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-23 17:59:04 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1182'), (b'Content-Type', b'application/json'), (b'Date', b'Mon, 23 Mar 2026 14:59:04 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'290'), (b'X-Request-Id', b'3af38a0c-cb21-47eb-9eb2-d0124dd98e1e'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-23 17:59:04 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-23 17:59:04 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-23 17:59:04 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-23 17:59:04 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-23 17:59:04 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-23 17:59:05 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=6 tools=True
+2026-03-23 17:59:05 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-23 17:59:05 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-23 17:59:05 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-23 17:59:05 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-23 17:59:05 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-23 17:59:07 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1079'), (b'Content-Type', b'application/json'), (b'Date', b'Mon, 23 Mar 2026 14:59:07 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'290'), (b'X-Request-Id', b'1643b1b2-de25-4c13-ba46-bd7264fb8da0'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-23 17:59:07 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-23 17:59:07 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-23 17:59:07 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-23 17:59:07 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-23 17:59:07 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-23 17:59:14 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=9 tools=True
+2026-03-23 17:59:14 | DEBUG | httpcore.connection | close.started
+2026-03-23 17:59:14 | DEBUG | httpcore.connection | close.complete
+2026-03-23 17:59:14 | DEBUG | httpcore.connection | connect_tcp.started host='ru-2.gateway.nekocode.app' port=443 local_address=None timeout=5.0 socket_options=None
+2026-03-23 17:59:14 | DEBUG | httpcore.connection | connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x70fbdd4a3a70>
+2026-03-23 17:59:14 | DEBUG | httpcore.connection | start_tls.started ssl_context=<ssl.SSLContext object at 0x70fbddf1f6d0> server_hostname='ru-2.gateway.nekocode.app' timeout=5.0
+2026-03-23 17:59:14 | DEBUG | httpcore.connection | start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x70fbdd4a39e0>
+2026-03-23 17:59:14 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-23 17:59:14 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-23 17:59:14 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-23 17:59:14 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-23 17:59:14 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-23 17:59:16 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1187'), (b'Content-Type', b'application/json'), (b'Date', b'Mon, 23 Mar 2026 14:59:16 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'293'), (b'X-Request-Id', b'5655e6b4-f726-4bd1-98f6-e53b94d451b9'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-23 17:59:16 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-23 17:59:16 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-23 17:59:16 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-23 17:59:16 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-23 17:59:16 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-23 17:59:16 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=11 tools=True
+2026-03-23 17:59:16 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-23 17:59:16 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-23 17:59:16 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-23 17:59:16 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-23 17:59:16 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-23 17:59:18 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1045'), (b'Content-Type', b'application/json'), (b'Date', b'Mon, 23 Mar 2026 14:59:18 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'292'), (b'X-Request-Id', b'46dd27c2-a043-4440-8677-ff0c00320622'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-23 17:59:18 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-23 17:59:18 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-23 17:59:18 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-23 17:59:18 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-23 17:59:18 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-23 17:59:18 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=13 tools=True
+2026-03-23 17:59:19 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-23 17:59:19 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-23 17:59:19 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-23 17:59:19 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-23 17:59:19 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-23 17:59:20 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1079'), (b'Content-Type', b'application/json'), (b'Date', b'Mon, 23 Mar 2026 14:59:20 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'291'), (b'X-Request-Id', b'53f095be-b46e-4959-967f-d3a5a9636214'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-23 17:59:20 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-23 17:59:20 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-23 17:59:20 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-23 17:59:20 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-23 17:59:20 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-23 17:59:21 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=15 tools=True
+2026-03-23 17:59:21 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-23 17:59:21 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-23 17:59:21 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-23 17:59:21 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-23 17:59:21 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-23 17:59:23 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1048'), (b'Content-Type', b'application/json'), (b'Date', b'Mon, 23 Mar 2026 14:59:23 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'290'), (b'X-Request-Id', b'2125ae30-4837-49f2-b9fc-46d98a76727a'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-23 17:59:23 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-23 17:59:23 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-23 17:59:23 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-23 17:59:23 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-23 17:59:23 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-23 17:59:23 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=2 tools=False
+2026-03-23 17:59:23 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-23 17:59:23 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-23 17:59:23 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-23 17:59:23 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-23 17:59:23 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-23 17:59:25 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1315'), (b'Content-Type', b'application/json'), (b'Date', b'Mon, 23 Mar 2026 14:59:25 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'289'), (b'X-Request-Id', b'87800f34-148c-40c8-930a-a42ab627bf85'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-23 17:59:25 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-23 17:59:25 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-23 17:59:25 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-23 17:59:25 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-23 17:59:25 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-23 17:59:25 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=2 tools=False
+2026-03-23 17:59:25 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-23 17:59:25 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-23 17:59:25 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-23 17:59:25 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-23 17:59:25 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-23 17:59:27 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1073'), (b'Content-Type', b'application/json'), (b'Date', b'Mon, 23 Mar 2026 14:59:27 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'288'), (b'X-Request-Id', b'66168f8e-6e4b-45b9-bd98-019bee9c9cf2'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-23 17:59:27 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-23 17:59:27 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-23 17:59:27 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-23 17:59:27 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-23 17:59:27 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-23 17:59:27 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=2 tools=True
+2026-03-23 17:59:27 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-23 17:59:27 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-23 17:59:27 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-23 17:59:27 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-23 17:59:27 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-23 17:59:30 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1082'), (b'Content-Type', b'application/json'), (b'Date', b'Mon, 23 Mar 2026 14:59:30 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'287'), (b'X-Request-Id', b'55637104-034f-41ff-8d05-42ad3793d3ba'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-23 17:59:30 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-23 17:59:30 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-23 17:59:30 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-23 17:59:30 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-23 17:59:30 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-23 17:59:33 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=4 tools=True
+2026-03-23 17:59:33 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-23 17:59:33 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-23 17:59:33 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-23 17:59:33 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-23 17:59:33 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-23 17:59:34 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'1048'), (b'Content-Type', b'application/json'), (b'Date', b'Mon, 23 Mar 2026 14:59:34 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'286'), (b'X-Request-Id', b'a36e2e44-796e-4c03-a26c-04c08d32069f'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-23 17:59:34 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-23 17:59:34 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-23 17:59:34 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-23 17:59:34 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-23 17:59:34 | DEBUG | httpcore.http11 | response_closed.complete
+2026-03-23 17:59:35 | DEBUG | browser_agent.openai | OpenAI request: model=gpt-5.1-2025-11-13 messages=6 tools=True
+2026-03-23 17:59:35 | DEBUG | httpcore.http11 | send_request_headers.started request=<Request [b'POST']>
+2026-03-23 17:59:35 | DEBUG | httpcore.http11 | send_request_headers.complete
+2026-03-23 17:59:35 | DEBUG | httpcore.http11 | send_request_body.started request=<Request [b'POST']>
+2026-03-23 17:59:35 | DEBUG | httpcore.http11 | send_request_body.complete
+2026-03-23 17:59:35 | DEBUG | httpcore.http11 | receive_response_headers.started request=<Request [b'POST']>
+2026-03-23 17:59:36 | DEBUG | httpcore.http11 | receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Length', b'990'), (b'Content-Type', b'application/json'), (b'Date', b'Mon, 23 Mar 2026 14:59:36 GMT'), (b'Vary', b'Origin'), (b'X-Ratelimit-Limit', b'300'), (b'X-Ratelimit-Remaining', b'285'), (b'X-Request-Id', b'2ff2d422-db1f-4297-a184-e786797753ca'), (b'X-Robots-Tag', b'noindex, nofollow')])
+2026-03-23 17:59:36 | INFO | httpx | HTTP Request: POST https://ru-2.gateway.nekocode.app/alpha/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-23 17:59:36 | DEBUG | httpcore.http11 | receive_response_body.started request=<Request [b'POST']>
+2026-03-23 17:59:36 | DEBUG | httpcore.http11 | receive_response_body.complete
+2026-03-23 17:59:36 | DEBUG | httpcore.http11 | response_closed.started
+2026-03-23 17:59:36 | DEBUG | httpcore.http11 | response_closed.complete

@@ -1,0 +1,13 @@
+2026-03-23 17:58:33 | INFO | browser_agent.chat | META Логи пишутся в папку: logs/23.03.2026 - 17:58:33
+2026-03-23 17:58:34 | INFO | browser_agent.chat | META Привет! Чем могу помочь?
+2026-03-23 17:58:34 | INFO | browser_agent.chat | META Команды: :exit (выйти), :help (помощь). Любой другой текст = новая задача.
+2026-03-23 17:58:34 | INFO | browser_agent.chat | PROMPT > 
+2026-03-23 17:58:48 | INFO | browser_agent.chat | USER Зайди на hh.ru и скажи сколько у меня там не прочитанных сообщений
+2026-03-23 17:58:52 | INFO | browser_agent.chat | META Начинаю выполнение плана
+2026-03-23 17:58:56 | INFO | browser_agent.chat | META Открыть главную страницу hh.ru, чтобы затем перейти к авторизации и личным сообщениям.
+2026-03-23 17:58:59 | INFO | browser_agent.chat | ASSISTANT Сначала открою сайт hh.ru в этом табе.
+2026-03-23 17:59:04 | INFO | browser_agent.chat | ASSISTANT Сейчас открою меню профиля, чтобы перейти к вашим личным сообщениям на hh.ru.
+2026-03-23 17:59:16 | INFO | browser_agent.chat | ASSISTANT Сначала закрою мешающее окно cookie, нажав на кнопку «Закрыть».
+2026-03-23 17:59:27 | INFO | browser_agent.chat | META Перейти в раздел откликов/переписки, где отображаются сообщения и их счетчики.
+2026-03-23 17:59:36 | INFO | browser_agent.chat | RESULT RESULT: Сейчас на hh.ru у вас 1 непрочитанное сообщение (цифра «1» в шапке рядом с иконкой профиля/сообщений).
+2026-03-23 17:59:36 | INFO | browser_agent.chat | PROMPT > 
