@@ -41,7 +41,11 @@ python3 -m playwright install chromium
 ```sh
 export OPENAI_API_KEY="..."
 export OPENAI_MODEL="gpt-4-turbo"  # или аналог, который доступен в вашем аккаунте
-export OPENAI_BASE_URL="https://ru-2.gateway.nekocode.app/alpha/v1"
+# Optional. If not set, the official OpenAI endpoint is used.
+# export OPENAI_BASE_URL="https://api.openai.com/v1"
+#
+# Example gateway (OpenAI-compatible):
+# export OPENAI_BASE_URL="https://ru-2.gateway.nekocode.app/alpha/v1"
 ```
 
 Также можно положить эти значения в `.env` в корне проекта (файл будет автоматически подхвачен при запуске).
@@ -91,6 +95,11 @@ browser-agent --help
 Команды внутри REPL:
 - `:help` — короткая помощь.
 - `:exit` (или `exit`, `quit`) — выйти.
+
+### Base URL (OpenAI vs gateway)
+
+- По умолчанию используется официальный OpenAI endpoint: `https://api.openai.com/v1`.
+- Чтобы использовать OpenAI-compatible gateway, задайте `OPENAI_BASE_URL`. Можно указывать как с `/v1`, так и без него — приложение автоматически добавит `/v1`, если нужно.
 
 ### Размер окна / адаптивность
 

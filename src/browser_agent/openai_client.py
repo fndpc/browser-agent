@@ -60,7 +60,8 @@ def load_openai_config(model_override: str | None = None) -> OpenAIConfig:
     if not api_key:
         raise RuntimeError("OPENAI_API_KEY is not set")
     model = (model_override or os.environ.get("OPENAI_MODEL") or "gpt-4-turbo").strip()
-    base_url = (os.environ.get("OPENAI_BASE_URL") or "https://ru-2.gateway.nekocode.app/alpha").strip()
+    # Default to official OpenAI endpoint unless the user overrides via OPENAI_BASE_URL.
+    base_url = (os.environ.get("OPENAI_BASE_URL") or "https://api.openai.com/v1").strip()
     # OpenAI SDK expects base_url to include the API prefix (`/v1`), because it calls `/chat/completions`, etc.
     # Your gateway uses openai-compatible endpoints under `/v1/...`.
     if not base_url.rstrip("/").endswith("/v1"):
